@@ -16,21 +16,33 @@ public class NodoArbol {
 
     private String Nombre;
     private String Numeral;
-    private String Pelo;
+    private String Apodo;
+    private String Titulo;
+    private String Casado;
     private String Ojos;
-    private String Madre;
+    private String Pelo;
+    private String Hijos;
+    private String Notas;
+    private String Destino;
     private NodoArbol fSon;
     private NodoArbol nBrother;
 
-    public NodoArbol(String Nombre, String Numeral, String Pelo, String Ojos, String Madre) {
+    public NodoArbol(String Nombre, String Numeral, String Apodo, String Titulo, String Casado, String Ojos, String Pelo, String Hijos, String Notas, String Destino) {
         this.Nombre = Nombre;
         this.Numeral = Numeral;
-        this.Pelo = Pelo;
+        this.Apodo = Apodo;
+        this.Titulo = Titulo;
+        this.Casado = Casado;
         this.Ojos = Ojos;
-        this.Madre = Madre;
+        this.Pelo = Pelo;
+        this.Hijos = Hijos;
+        this.Notas = Notas;
+        this.Destino = Destino;
         this.fSon = null;
         this.nBrother = null;
     }
+
+    
 
     /**
      * @return the Nombre
