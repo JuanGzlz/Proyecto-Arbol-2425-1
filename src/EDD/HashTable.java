@@ -4,6 +4,7 @@
  */
 package EDD;
 import Arbol.NodoArbol;
+import static java.lang.Math.abs;
 
 /**
  *
@@ -37,11 +38,12 @@ public class HashTable {
             }
             current.setpNext(newNodo);
         }
+        System.out.println(Nombre);
     }
     
     private int buscarIndex (String nombre){
         int indice = nombre.hashCode() % Hash.length;
-        return indice;
+        return abs(indice);
     }
     
     public NodoArbol busquedaHasheo (String nombre){

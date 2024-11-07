@@ -84,7 +84,6 @@ public class JsonDecoder {
         this.Read();
         String Nombre = this.Read();
         Nombre = Nombre.replace("\"", "").replace(":[", "").trim();
-        this.Reset();
         return Nombre;
     }
     
@@ -97,6 +96,7 @@ public class JsonDecoder {
      */
     
     @SuppressWarnings("empty-statement")
+   
     public HashTable crearHashTable() throws IOException{
         String N = this.CasaNombre();
         HashTable tabla = new HashTable(N);
@@ -104,23 +104,39 @@ public class JsonDecoder {
         int contador = 0;
         String[] Atributos = {"", "", "", "", "", "", "", "", "", ""};
         while (Iteracion != null){
-            if (Iteracion.contains("[")){
+            if(Iteracion.contains("House Baratheon")){
+                System.out.println("A");
+            }
+            if (Iteracion.contains("[") && !Iteracion.contains("]")){
+                if(!Iteracion.contains("Father to")){
+                    Atributos[0] = Iteracion.replace("\"", "").replace("[", "").replace(":", "").trim();
+                }
                 contador++;                
-            }else if (Iteracion.contains("]")){
+            }else if (Iteracion.contains("]") && !Iteracion.contains("[")){
                 contador--;                
             }
             
-            if(contador==0){
-                NodoArbol newNodoArbol = new NodoArbol(Atributos[0], Atributos[1], Atributos[2], Atributos[3], Atributos[4], Atributos[5], Atributos[6], Atributos[7], Atributos[8], Atributos[9]);
-                String Nombre_completo = Atributos[0] + ", " + Atributos[1] + " of his name";
-                tabla.insertNodo(newNodoArbol, Nombre_completo);
-                for(int i = 0; i < Atributos.length; i++){
-                    Atributos[i] = "";
-                }
-            } else if(contador==1){
-                Atributos = GuardarDatos(Iteracion, Atributos);
+            switch (contador) {
+                case 0:
+                    if(!Iteracion.contains("{") && !Iteracion.contains("}")){
+                    NodoArbol newNodoArbol = new NodoArbol(Atributos[0], Atributos[1], Atributos[2], Atributos[3], Atributos[4], Atributos[5], Atributos[6], Atributos[7], Atributos[8], Atributos[9]);
+                    String Nombre_completo = Atributos[0] + ", " + Atributos[1] + " of his name";
+                    tabla.insertNodo(newNodoArbol, Nombre_completo);
+                    for(int i = 0; i < Atributos.length; i++){
+                        Atributos[i] = "";
+                        }
+                    }
+                    break;
+                case 1:
+                    Atributos = GuardarDatos(Iteracion, Atributos);
+                    break;
+                case 2:
+                    Atributos = GuardarHijos(Iteracion, Atributos);
+                    break;
+                default:
+                    break;
             }
-            
+//            System.out.println(contador);
             Iteracion = this.Read();
         }
         return tabla;
@@ -128,9 +144,32 @@ public class JsonDecoder {
     
     public String[] GuardarDatos(String Linea, String[] Array){
         if (Linea.contains("Of his name")){
-            Array[1] = Linea.replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+            Array[1] = Linea.replace("Of his name", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+        } else if (Linea.contains("Known throughout as")){
+            Array[2] = Linea.replace("Known throughout as", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+        } else if (Linea.contains("Held title")){
+            Array[3] = Linea.replace("Held title", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+        } else if (Linea.contains("Wed to")){
+            Array[4] = Linea.replace("Wed to", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+        } else if (Linea.contains("Of eyes")){
+            Array[5] = Linea.replace("Of eyes", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+        } else if (Linea.contains("Of hair")){
+            Array[6] = Linea.replace("Of hair", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+        } else if (Linea.contains("Notes")){
+            Array[8] = Linea.replace("Notes", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+        } else if (Linea.contains("Fate")){
+            Array[9] = Linea.replace("Fate", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
         }
-        
+              
+        return Array;
+    }
+    
+    private String[] GuardarHijos(String Linea, String[] Array){
+        if(Array[7].equals("")){
+            Array[7] = Linea.replace("\"", "").replace(",", "").trim();
+        } else {
+            Array[7] = Array[7] + ", " + Linea.replace("\"", "").replace(",", "").trim();
+        }
         return Array;
     }
 }
