@@ -38,7 +38,6 @@ public class HashTable {
             }
             current.setpNext(newNodo);
         }
-        System.out.println(Nombre);
     }
     
     private int buscarIndex (String nombre){

@@ -69,7 +69,7 @@ public class JsonDecoder {
         BufferedReader MyBuffer = new BufferedReader(NewFileReader);
         String mystr = MyBuffer.readLine();
         while(mystr != null){
-            System.out.println(mystr); //Aquí puede ir el procesamiento
+            System.out.println(mystr);
             mystr = MyBuffer.readLine();
         }
     }
@@ -104,9 +104,6 @@ public class JsonDecoder {
         int contador = 0;
         String[] Atributos = {"", "", "", "", "", "", "", "", "", ""};
         while (Iteracion != null){
-            if(Iteracion.contains("House Baratheon")){
-                System.out.println("A");
-            }
             if (Iteracion.contains("[") && !Iteracion.contains("]")){
                 if(!Iteracion.contains("Father to")){
                     Atributos[0] = Iteracion.replace("\"", "").replace("[", "").replace(":", "").trim();
@@ -136,13 +133,12 @@ public class JsonDecoder {
                 default:
                     break;
             }
-//            System.out.println(contador);
             Iteracion = this.Read();
         }
         return tabla;
     }
     
-    public String[] GuardarDatos(String Linea, String[] Array){
+    private String[] GuardarDatos(String Linea, String[] Array){
         if (Linea.contains("Of his name")){
             Array[1] = Linea.replace("Of his name", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
         } else if (Linea.contains("Known throughout as")){
@@ -172,4 +168,53 @@ public class JsonDecoder {
         }
         return Array;
     }
+    
+    public HashTable HashTableMotes(HashTable Tabla) throws IOException{
+        this.Reset();
+        String N = this.CasaNombre();
+        HashTable NuevaTabla = new HashTable(N);
+        String Iteracion = this.Read();
+        int contador = 0;
+        String mote = "";
+        String NombreCompleto = "";
+        String Nombre = "";
+        while (Iteracion != null){
+            if (Iteracion.contains("[") && !Iteracion.contains("]")){
+                if(!Iteracion.contains("Father to")){
+                    Nombre = Iteracion.replace("\"", "").replace("[", "").replace(":", "").trim();
+                }
+                contador++;                
+            }else if (Iteracion.contains("]") && !Iteracion.contains("[")){
+                contador--;                
+            }
+            switch (contador){
+                case 0:
+                    if (!Iteracion.contains("{") && !Iteracion.contains("}")){
+                        NodoArbol nodo = Tabla.busquedaHasheo(NombreCompleto);
+                        if(!mote.equals("")){
+                            NuevaTabla.insertNodo(nodo, mote);
+                        }
+                        else {
+                            System.out.println(NombreCompleto);
+                            NuevaTabla.insertNodo(nodo, NombreCompleto);
+                        }
+                    }
+                    mote = "";
+                    NombreCompleto = "";
+                    Nombre = "";
+                    break;
+                case 1:
+                    if (Iteracion.contains("Known throughout as")){
+                        mote = Iteracion.replace("Known throughout as", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+                    } else if(Iteracion.contains("Of his name")){
+                        String Numeral = Iteracion.replace("Of his name", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+                        NombreCompleto = Nombre + ", " + Numeral + " of his name";
+                    }
+                    break;
+            }
+        Iteracion = this.Read();
+        }
+        return NuevaTabla;
+    }
+    
 }
