@@ -16,6 +16,7 @@ public class NodoArbol {
 
     private String Nombre;
     private String Numeral;
+    private String Mama;
     private String Apodo;
     private String Titulo;
     private String Casado;
@@ -27,9 +28,10 @@ public class NodoArbol {
     private NodoArbol fSon;
     private NodoArbol nBrother;
 
-    public NodoArbol(String Nombre, String Numeral, String Apodo, String Titulo, String Casado, String Ojos, String Pelo, String Hijos, String Notas, String Destino) {
+    public NodoArbol(String Nombre, String Numeral, String Mama, String Apodo, String Titulo, String Casado, String Ojos, String Pelo, String Hijos, String Notas, String Destino) {
         this.Nombre = Nombre;
         this.Numeral = Numeral;
+        this.Mama = Mama;
         this.Apodo = Apodo;
         this.Titulo = Titulo;
         this.Casado = Casado;
@@ -97,6 +99,69 @@ public class NodoArbol {
         } else{
             fSon = hijo;
         }            
+    }
+
+    /**
+     * @return the Mama
+     */
+    public String getMama() {
+        return Mama;
+    }
+
+    /**
+     * @return the Apodo
+     */
+    public String getApodo() {
+        return Apodo;
+    }
+
+    /**
+     * @return the Titulo
+     */
+    public String getTitulo() {
+        return Titulo;
+    }
+
+    /**
+     * @return the Casado
+     */
+    public String getCasado() {
+        return Casado;
+    }
+
+    /**
+     * @return the Ojos
+     */
+    public String getOjos() {
+        return Ojos;
+    }
+
+    /**
+     * @return the Pelo
+     */
+    public String getPelo() {
+        return Pelo;
+    }
+
+    /**
+     * @return the Hijos
+     */
+    public String getHijos() {
+        return Hijos;
+    }
+
+    /**
+     * @return the Notas
+     */
+    public String getNotas() {
+        return Notas;
+    }
+
+    /**
+     * @return the Destino
+     */
+    public String getDestino() {
+        return Destino;
     }
     
 }

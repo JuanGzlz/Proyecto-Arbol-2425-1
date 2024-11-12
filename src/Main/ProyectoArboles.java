@@ -24,10 +24,20 @@ public class ProyectoArboles {
         newFile.chooseFile();
         JsonDecoder newChose = new JsonDecoder(newFile.getJson());
         HashTable tabla = newChose.crearHashTable();
-        NodoArbol newNodo = tabla.busquedaHasheo("Baelon  Targaryen, First of his name");
+        NodoArbol newNodo = tabla.busquedaHasheo("Lyonel Baratheon, First of his name");
         HashTable tabla2 = newChose.HashTableMotes(tabla);
-        NodoArbol newNodo2 = tabla2.busquedaHasheo("Baelon Targaryen, First of his name");
-        System.out.println(newNodo.getNombre());
-        System.out.println(newNodo2.getNombre());
+        NodoArbol newNodo2 = tabla2.busquedaHasheo("The Usurper");
+//        System.out.println(newNodo.getNombre());
+//        System.out.println(newNodo2.getNombre());
+        System.out.println(newNodo.getNumeral());
+        System.out.println(newNodo.getMama());
+        System.out.println(newNodo.getApodo());
+        System.out.println(newNodo.getCasado());
+        System.out.println(newNodo.getOjos());
+        System.out.println(newNodo.getPelo());
+        System.out.println(newNodo.getHijos());
+        System.out.println(newNodo.getNotas());
+        System.out.println(newNodo.getDestino());
+        System.out.println(newNodo.getTitulo());
     }
 }
