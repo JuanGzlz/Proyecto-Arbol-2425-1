@@ -16,6 +16,7 @@ public class NodoArbol {
 
     private String Nombre;
     private String Numeral;
+    private String Papa;
     private String Mama;
     private String Apodo;
     private String Titulo;
@@ -28,9 +29,10 @@ public class NodoArbol {
     private NodoArbol fSon;
     private NodoArbol nBrother;
 
-    public NodoArbol(String Nombre, String Numeral, String Mama, String Apodo, String Titulo, String Casado, String Ojos, String Pelo, String Hijos, String Notas, String Destino) {
+    public NodoArbol(String Nombre, String Numeral, String Papa, String Mama, String Apodo, String Titulo, String Casado, String Ojos, String Pelo, String Hijos, String Notas, String Destino) {
         this.Nombre = Nombre;
         this.Numeral = Numeral;
+        this.Papa = Papa;
         this.Mama = Mama;
         this.Apodo = Apodo;
         this.Titulo = Titulo;
@@ -163,5 +165,14 @@ public class NodoArbol {
     public String getDestino() {
         return Destino;
     }
+
+    /**
+     * @return the Papa
+     */
+    public String getPapa() {
+        return Papa;
+    }
+    
+    
     
 }

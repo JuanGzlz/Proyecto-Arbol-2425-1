@@ -27,7 +27,7 @@ public class HashTable {
     }
     
     public void insertNodo (NodoArbol persona, String Nombre){
-        Nodo newNodo = new Nodo(Nombre, persona.getNumeral(), persona);
+        Nodo newNodo = new Nodo(Nombre, persona);
         int indice = buscarIndex(Nombre);
         if (Hash[indice] == null){
             Hash[indice] = newNodo;
@@ -57,6 +57,33 @@ public class HashTable {
             newNodo = newNodo.getpNext();
         }
         return newArbol;
+    }
+    
+    public Nodo DevolverPosible(String Nombre){
+        Nodo Head = null;
+        Nodo current = null;
+        Nodo Tail = null;
+        for(int i = 0; i < this.Hash.length; i++){
+            if(Hash[i]!=null){
+                current = Hash[i];
+                while(current!=null){
+                    if(Nombre.contains(current.getPersona().getNombre())){
+                        if(Head==null){
+                            Head = new Nodo(current.getNombre(), current.getPersona());
+                        }else{
+                            Tail = Head;
+                            while(Tail.getpNext()!=null){
+                                Tail = Tail.getpNext();
+                            }
+                            Tail.setpNext(new Nodo(current.getNombre(), current.getPersona()));
+                        }
+                    }   
+                current = current.getpNext();
+                    System.out.println("b");
+                }
+            }
+        }
+        return Head;
     }
 
 }
