@@ -6,6 +6,7 @@ package Funciones;
 import Arbol.Arbol;
 import Arbol.NodoArbol;
 import EDD.HashTable;
+import EDD.Lista;
 import EDD.Nodo;
 import java.io.BufferedReader;
 import java.io.File;
@@ -282,16 +283,20 @@ public class JsonDecoder {
                         } else if(PadreMote != null){
                             PadreMote.AgregarHijo(nodo);
                         } else{
-                            Nodo current = tablaNombres.DevolverPosible(padre);
+                            Lista posibles = tablaNombres.DevolverPosible(padre);
+                            Nodo current = posibles.getpFirst();
+//                            if(current==null){
+//                                System.out.println("Invalido");
+//                            }
                             while(current!=null){
                                 String[] Hijos = current.getPersona().getHijos().split(", ");
                                 for(int i = 0; i < Hijos.length; i++){
                                     if(nodo.getNombre().contains(Hijos[i])){
+                                        System.out.println("Llego");
                                        current.getPersona().AgregarHijo(nodo);
                                        break;
                                     }
                                 }
-                                System.out.println("a"); 
                             current = current.getpNext();
                             }
                         }
@@ -301,6 +306,8 @@ public class JsonDecoder {
                     
                     NombreCompleto = "";
                     Nombre = "";
+                    padre = "";
+                    SeenPadre = false;
                     break;
                 case 1:
                     if(Iteracion.contains("Of his name")){
@@ -313,9 +320,9 @@ public class JsonDecoder {
                     }
                     break;
             }
-        
     Iteracion = this.Read();
-    }
-            return newArbol;
+    System.out.println("fin");  
+    }  
+        return newArbol;
 }
 }

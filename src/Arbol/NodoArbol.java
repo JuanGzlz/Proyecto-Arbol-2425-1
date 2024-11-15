@@ -92,15 +92,15 @@ public class NodoArbol {
     
     
     public void AgregarHijo(NodoArbol hijo){
-        if (fSon != null){
-            NodoArbol current = fSon;
-            while (current.nBrother != null){
-                current = current.nBrother;
-            }
-            current.nBrother = hijo;
-        } else{
+        if(fSon==null){
             fSon = hijo;
-        }            
+        } else{
+            NodoArbol PrimerHijo = fSon;
+            while(PrimerHijo!=null){
+                PrimerHijo = PrimerHijo.nBrother;
+            }
+            PrimerHijo = hijo;
+        }
     }
 
     /**

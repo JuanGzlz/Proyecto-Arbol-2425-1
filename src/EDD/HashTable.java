@@ -59,31 +59,21 @@ public class HashTable {
         return newArbol;
     }
     
-    public Nodo DevolverPosible(String Nombre){
-        Nodo Head = null;
+    public Lista DevolverPosible(String Nombre){
+        Lista posibles = new Lista();
         Nodo current = null;
-        Nodo Tail = null;
         for(int i = 0; i < this.Hash.length; i++){
             if(Hash[i]!=null){
                 current = Hash[i];
                 while(current!=null){
                     if(Nombre.contains(current.getPersona().getNombre())){
-                        if(Head==null){
-                            Head = new Nodo(current.getNombre(), current.getPersona());
-                        }else{
-                            Tail = Head;
-                            while(Tail.getpNext()!=null){
-                                Tail = Tail.getpNext();
-                            }
-                            Tail.setpNext(new Nodo(current.getNombre(), current.getPersona()));
-                        }
-                    }   
+                        posibles.addLast(current.getPersona());
+                    }
                 current = current.getpNext();
-                    System.out.println("b");
                 }
             }
         }
-        return Head;
+        return posibles;
     }
 
 }

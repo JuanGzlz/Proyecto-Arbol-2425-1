@@ -27,11 +27,12 @@ public class ProyectoArboles {
         HashTable tabla = newChose.crearHashTable();
         NodoArbol newNodo = tabla.busquedaHasheo("Viserys Targaryen, First of his name, son of Aegon the Conqueror");
         HashTable tabla2 = newChose.HashTableMotes(tabla);
-        NodoArbol newNodo2 = tabla2.busquedaHasheo("The Dragon");
+        NodoArbol newNodo2 = tabla2.busquedaHasheo("Daeron the Good");
         Arbol ar = newChose.crearArbol(tabla, tabla2);
-        NodoArbol root = ar.getRaiz();
-        System.out.println(root.getNombre());
+        NodoArbol hijo = newNodo2.getfSon().getnBrother();
+        System.out.println(hijo.getNombre());
 //        System.out.println(newNodo.getNombre());
+//        System.out.println(root.getHijos());
 //        System.out.println(newNodo2.getNombre());
 //        System.out.println(newNodo.getNumeral());
 //        System.out.println(newNodo.getPapa());
