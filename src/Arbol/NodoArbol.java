@@ -93,13 +93,13 @@ public class NodoArbol {
     
     public void AgregarHijo(NodoArbol hijo){
         if(fSon==null){
-            fSon = hijo;
+            this.setfSon(hijo);
         } else{
-            NodoArbol PrimerHijo = fSon;
-            while(PrimerHijo!=null){
-                PrimerHijo = PrimerHijo.nBrother;
+            NodoArbol PrimerHijo = this.getfSon();
+            while(PrimerHijo.getnBrother() != null){
+                PrimerHijo = PrimerHijo.getnBrother();
             }
-            PrimerHijo = hijo;
+            PrimerHijo.setnBrother(hijo);
         }
     }
 

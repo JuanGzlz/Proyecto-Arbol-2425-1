@@ -285,14 +285,11 @@ public class JsonDecoder {
                         } else{
                             Lista posibles = tablaNombres.DevolverPosible(padre);
                             Nodo current = posibles.getpFirst();
-//                            if(current==null){
-//                                System.out.println("Invalido");
-//                            }
                             while(current!=null){
                                 String[] Hijos = current.getPersona().getHijos().split(", ");
                                 for(int i = 0; i < Hijos.length; i++){
-                                    if(nodo.getNombre().contains(Hijos[i])){
-                                        System.out.println("Llego");
+                                    if(nodo.getNombre().contains(Hijos[i]) && !Hijos[i].equals("")){
+                                       System.out.println(Hijos[i]);
                                        current.getPersona().AgregarHijo(nodo);
                                        break;
                                     }
@@ -321,7 +318,6 @@ public class JsonDecoder {
                     break;
             }
     Iteracion = this.Read();
-    System.out.println("fin");  
     }  
         return newArbol;
 }
