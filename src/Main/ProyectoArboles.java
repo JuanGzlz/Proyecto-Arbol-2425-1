@@ -30,9 +30,10 @@ public class ProyectoArboles {
         NodoArbol newNodo2 = tabla2.busquedaHasheo("Daeron the Good");
         Arbol ar = newChose.crearArbol(tabla, tabla2);
         NodoArbol hijo = newNodo2.getfSon().getnBrother();
+        NodoArbol root = ar.getRaiz();
         System.out.println(hijo.getNombre());
 //        System.out.println(newNodo.getNombre());
-//        System.out.println(root.getHijos());
+        System.out.println(root.getHijos());
 //        System.out.println(newNodo2.getNombre());
 //        System.out.println(newNodo.getNumeral());
 //        System.out.println(newNodo.getPapa());

@@ -62,15 +62,6 @@ public class JsonDecoder {
         this.NewBufferedReader = new BufferedReader(NewFileReader);
     }
     
-//    public void Marcar() throws IOException {
-//        this.NewBufferedReader.mark(2);
-//    }
-//    
-//    public void Devolverse() throws IOException{
-//        this.NewBufferedReader.reset();
-//        this.NewBufferedReader.
-//    }
-    
     /**
      * Método que lee cada línea del json exactamente una vez
      */
@@ -317,7 +308,7 @@ public class JsonDecoder {
                     }
                     break;
             }
-    Iteracion = this.Read();
+        Iteracion = this.Read();
     }  
         return newArbol;
 }
