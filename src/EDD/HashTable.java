@@ -13,6 +13,7 @@ import static java.lang.Math.abs;
 public class HashTable {
     private String NombreTabla;
     private Nodo[] Hash;
+    private int size;
 
     public HashTable(String nombre) {
         this.NombreTabla = nombre;
@@ -29,26 +30,27 @@ public class HashTable {
     public void insertNodo (NodoArbol persona, String Nombre){
         Nodo newNodo = new Nodo(Nombre, persona);
         int indice = buscarIndex(Nombre);
-        if (Hash[indice] == null){
+        if (getHash()[indice] == null){
             Hash[indice] = newNodo;
         }else{
-            Nodo current = Hash[indice];
+            Nodo current = getHash()[indice];
             while (current.getpNext() != null){
                 current = current.getpNext();
             }
             current.setpNext(newNodo);
         }
+        
     }
     
     private int buscarIndex (String nombre){
-        int indice = nombre.hashCode() % Hash.length;
+        int indice = nombre.hashCode() % getHash().length;
         return abs(indice);
     }
     
     public NodoArbol busquedaHasheo (String nombre){
         int ind = buscarIndex(nombre);
         NodoArbol newArbol = null;
-        Nodo newNodo = Hash[ind];
+        Nodo newNodo = getHash()[ind];
         while (newNodo != null){
             if (newNodo.getNombre().equals(nombre)){
                 newArbol = newNodo.getPersona();
@@ -62,9 +64,9 @@ public class HashTable {
     public Lista DevolverPosible(String Nombre){
         Lista posibles = new Lista();
         Nodo current = null;
-        for(int i = 0; i < this.Hash.length; i++){
-            if(Hash[i]!=null){
-                current = Hash[i];
+        for(int i = 0; i < this.getHash().length; i++){
+            if(getHash()[i]!=null){
+                current = getHash()[i];
                 while(current!=null){
                     if(Nombre.contains(current.getPersona().getNombre())){
                         posibles.addLast(current.getPersona());
@@ -74,6 +76,27 @@ public class HashTable {
             }
         }
         return posibles;
+    }
+
+    /**
+     * @return the Hash
+     */
+    public Nodo[] getHash() {
+        return Hash;
+    }
+
+    /**
+     * @return the size
+     */
+    public int getSize() {
+        return size;
+    }
+
+    /**
+     * @param size the size to set
+     */
+    public void setSize(int size) {
+        this.size = size;
     }
 
 }
