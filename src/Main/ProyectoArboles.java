@@ -38,11 +38,10 @@ public class ProyectoArboles {
         
         TableManager creador = new TableManager();
         creador.CrearEstructuras(newChose);
-        String[] a = creador.BuscarPorTitulo("Prince of Dragonstone");
+        String[] a = creador.BuscarPorGeneracion("Generacion 10");
         for(int i = 0; i < a.length; i++){
             System.out.println(a[i]);
         }
-        System.out.println(newNodo3.DevolverDatos());
 //        System.out.println(hijo.getNombre());
 //        System.out.println(newNodo.getNombre());
 //        System.out.println(root.getHijos());

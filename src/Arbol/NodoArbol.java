@@ -173,6 +173,10 @@ public class NodoArbol {
         return Papa;
     }
     
+    public String NombreCompleto(){
+        return this.getNombre() + ", " + this.getNumeral() + " of his name, son of " + this.getPapa();
+    }
+    
     public String DevolverDatos(){
         String Mama = "";
         if(this.getMama().equals("")){
