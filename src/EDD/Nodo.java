@@ -12,13 +12,11 @@ import Arbol.NodoArbol;
  */
 public class Nodo {
     private String Nombre;
-    private String Numeral;
     private NodoArbol Persona;
     private Nodo pNext;
 
-    public Nodo(String Nombre, String Numeral, NodoArbol Persona) {
+    public Nodo(String Nombre, NodoArbol Persona) {
         this.Nombre = Nombre;
-        this.Numeral = Numeral;
         this.Persona = Persona;
         this.pNext = null;
     }
@@ -51,12 +49,5 @@ public class Nodo {
         return Nombre;
     }
 
-    /**
-     * @return the Numeral
-     */
-    public String getNumeral() {
-        return Numeral;
-    }
-    
     
 }

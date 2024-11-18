@@ -10,4 +10,24 @@ package Arbol;
  */
 public class Arbol {
     private NodoArbol Raiz;
+
+    public Arbol() {
+        this.Raiz = null;
+    }
+
+    /**
+     * @return the Raiz
+     */
+    public NodoArbol getRaiz() {
+        return Raiz;
+    }
+
+    /**
+     * @param Raiz the Raiz to set
+     */
+    public void setRaiz(NodoArbol Raiz) {
+        this.Raiz = Raiz;
+    }
+
+    
 }

@@ -16,6 +16,8 @@ public class NodoArbol {
 
     private String Nombre;
     private String Numeral;
+    private String Papa;
+    private String Mama;
     private String Apodo;
     private String Titulo;
     private String Casado;
@@ -27,9 +29,11 @@ public class NodoArbol {
     private NodoArbol fSon;
     private NodoArbol nBrother;
 
-    public NodoArbol(String Nombre, String Numeral, String Apodo, String Titulo, String Casado, String Ojos, String Pelo, String Hijos, String Notas, String Destino) {
+    public NodoArbol(String Nombre, String Numeral, String Papa, String Mama, String Apodo, String Titulo, String Casado, String Ojos, String Pelo, String Hijos, String Notas, String Destino) {
         this.Nombre = Nombre;
         this.Numeral = Numeral;
+        this.Papa = Papa;
+        this.Mama = Mama;
         this.Apodo = Apodo;
         this.Titulo = Titulo;
         this.Casado = Casado;
@@ -88,15 +92,87 @@ public class NodoArbol {
     
     
     public void AgregarHijo(NodoArbol hijo){
-        if (fSon != null){
-            NodoArbol current = fSon;
-            while (current.nBrother != null){
-                current = current.nBrother;
-            }
-            current.nBrother = hijo;
+        if(fSon==null){
+            this.setfSon(hijo);
         } else{
-            fSon = hijo;
-        }            
+            NodoArbol PrimerHijo = this.getfSon();
+            while(PrimerHijo.getnBrother() != null){
+                PrimerHijo = PrimerHijo.getnBrother();
+            }
+            PrimerHijo.setnBrother(hijo);
+        }
     }
+
+    /**
+     * @return the Mama
+     */
+    public String getMama() {
+        return Mama;
+    }
+
+    /**
+     * @return the Apodo
+     */
+    public String getApodo() {
+        return Apodo;
+    }
+
+    /**
+     * @return the Titulo
+     */
+    public String getTitulo() {
+        return Titulo;
+    }
+
+    /**
+     * @return the Casado
+     */
+    public String getCasado() {
+        return Casado;
+    }
+
+    /**
+     * @return the Ojos
+     */
+    public String getOjos() {
+        return Ojos;
+    }
+
+    /**
+     * @return the Pelo
+     */
+    public String getPelo() {
+        return Pelo;
+    }
+
+    /**
+     * @return the Hijos
+     */
+    public String getHijos() {
+        return Hijos;
+    }
+
+    /**
+     * @return the Notas
+     */
+    public String getNotas() {
+        return Notas;
+    }
+
+    /**
+     * @return the Destino
+     */
+    public String getDestino() {
+        return Destino;
+    }
+
+    /**
+     * @return the Papa
+     */
+    public String getPapa() {
+        return Papa;
+    }
+    
+    
     
 }

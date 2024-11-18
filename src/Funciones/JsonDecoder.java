@@ -6,6 +6,8 @@ package Funciones;
 import Arbol.Arbol;
 import Arbol.NodoArbol;
 import EDD.HashTable;
+import EDD.Lista;
+import EDD.Nodo;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -102,7 +104,8 @@ public class JsonDecoder {
         HashTable tabla = new HashTable(N);
         String Iteracion = this.Read();
         int contador = 0;
-        String[] Atributos = {"", "", "", "", "", "", "", "", "", ""};
+        boolean Madre = false;
+        String[] Atributos = {"", "", "", "", "", "", "", "", "", "", "", ""};
         while (Iteracion != null){
             if (Iteracion.contains("[") && !Iteracion.contains("]")){
                 if(!Iteracion.contains("Father to")){
@@ -116,16 +119,26 @@ public class JsonDecoder {
             switch (contador) {
                 case 0:
                     if(!Iteracion.contains("{") && !Iteracion.contains("}")){
-                    NodoArbol newNodoArbol = new NodoArbol(Atributos[0], Atributos[1], Atributos[2], Atributos[3], Atributos[4], Atributos[5], Atributos[6], Atributos[7], Atributos[8], Atributos[9]);
-                    String Nombre_completo = Atributos[0] + ", " + Atributos[1] + " of his name";
+                    NodoArbol newNodoArbol = new NodoArbol(Atributos[0], Atributos[1], Atributos[2], Atributos[3], Atributos[4], Atributos[5], Atributos[6], Atributos[7], Atributos[8], Atributos[9], Atributos[10], Atributos[11]);
+                    String Nombre_completo = Atributos[0] + ", " + Atributos[1] + " of his name, son of " + Atributos[2];
                     tabla.insertNodo(newNodoArbol, Nombre_completo);
                     for(int i = 0; i < Atributos.length; i++){
                         Atributos[i] = "";
                         }
+                    Madre = false;
                     }
                     break;
                 case 1:
-                    Atributos = GuardarDatos(Iteracion, Atributos);
+                    if(Iteracion.contains("Born to")){
+                        if(Madre==false){
+                            Atributos[2] = Iteracion.replace("Born to", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+                            Madre = true;
+                        }else{
+                            Atributos[3] = Iteracion.replace("Born to", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+                        }
+                    }else{
+                    Atributos = GuardarDatos(Iteracion, Atributos, Madre);
+                    }
                     break;
                 case 2:
                     Atributos = GuardarHijos(Iteracion, Atributos);
@@ -138,33 +151,36 @@ public class JsonDecoder {
         return tabla;
     }
     
-    private String[] GuardarDatos(String Linea, String[] Array){
+    private String[] GuardarDatos(String Linea, String[] Array, boolean Madre) throws IOException{
         if (Linea.contains("Of his name")){
             Array[1] = Linea.replace("Of his name", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
         } else if (Linea.contains("Known throughout as")){
-            Array[2] = Linea.replace("Known throughout as", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+            Array[4] = Linea.replace("Known throughout as", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
         } else if (Linea.contains("Held title")){
-            Array[3] = Linea.replace("Held title", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+            Array[5] = Linea.replace("Held title", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
         } else if (Linea.contains("Wed to")){
-            Array[4] = Linea.replace("Wed to", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+            Array[6] = Linea.replace("Wed to", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
         } else if (Linea.contains("Of eyes")){
-            Array[5] = Linea.replace("Of eyes", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+            Array[7] = Linea.replace("Of eyes", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
         } else if (Linea.contains("Of hair")){
-            Array[6] = Linea.replace("Of hair", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+            Array[8] = Linea.replace("Of hair", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
         } else if (Linea.contains("Notes")){
-            Array[8] = Linea.replace("Notes", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+            Array[10] = Linea.replace("Notes", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
         } else if (Linea.contains("Fate")){
-            Array[9] = Linea.replace("Fate", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+            Array[11] = Linea.replace("Fate", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
         }
               
         return Array;
     }
     
     private String[] GuardarHijos(String Linea, String[] Array){
-        if(Array[7].equals("")){
-            Array[7] = Linea.replace("\"", "").replace(",", "").trim();
+        if(Linea.contains("Father to")){
+            return Array;
+        }
+        else if(Array[9].equals("")){
+            Array[9] = Linea.replace("\"", "").replace(",", "").trim();
         } else {
-            Array[7] = Array[7] + ", " + Linea.replace("\"", "").replace(",", "").trim();
+            Array[9] = Array[9] + ", " + Linea.replace("\"", "").replace(",", "").trim();
         }
         return Array;
     }
@@ -178,6 +194,9 @@ public class JsonDecoder {
         String mote = "";
         String NombreCompleto = "";
         String Nombre = "";
+        String Padre = "";
+        String Numeral = "";
+        boolean SeenPadre = false;
         while (Iteracion != null){
             if (Iteracion.contains("[") && !Iteracion.contains("]")){
                 if(!Iteracion.contains("Father to")){
@@ -190,25 +209,32 @@ public class JsonDecoder {
             switch (contador){
                 case 0:
                     if (!Iteracion.contains("{") && !Iteracion.contains("}")){
+                        NombreCompleto = Nombre + ", " + Numeral + " of his name, son of " + Padre;
                         NodoArbol nodo = Tabla.busquedaHasheo(NombreCompleto);
                         if(!mote.equals("")){
                             NuevaTabla.insertNodo(nodo, mote);
                         }
                         else {
-                            System.out.println(NombreCompleto);
                             NuevaTabla.insertNodo(nodo, NombreCompleto);
                         }
                     }
                     mote = "";
                     NombreCompleto = "";
                     Nombre = "";
+                    Padre = "";
+                    Numeral = "";
+                    SeenPadre = false;
                     break;
                 case 1:
                     if (Iteracion.contains("Known throughout as")){
                         mote = Iteracion.replace("Known throughout as", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
                     } else if(Iteracion.contains("Of his name")){
-                        String Numeral = Iteracion.replace("Of his name", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
-                        NombreCompleto = Nombre + ", " + Numeral + " of his name";
+                        Numeral = Iteracion.replace("Of his name", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+                    }else if(Iteracion.contains("Born to")){
+                        if(SeenPadre==false){
+                        Padre = Iteracion.replace("Born to", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+                        SeenPadre = true;
+                        }
                     }
                     break;
             }
@@ -217,4 +243,73 @@ public class JsonDecoder {
         return NuevaTabla;
     }
     
+    public Arbol crearArbol(HashTable tablaNombres, HashTable tablaMotes) throws FileNotFoundException, IOException{
+        this.Reset();
+        String N = this.CasaNombre();
+        String Iteracion = this.Read();
+        Arbol newArbol = new Arbol();
+        int contador = 0;
+        boolean SeenPadre = false;
+        String padre = "";
+        String NombreCompleto = "";
+        String Nombre = "";
+        String Numeral = "";
+        while (Iteracion != null){
+            if (Iteracion.contains("[") && !Iteracion.contains("]")){
+                if(!Iteracion.contains("Father to")){
+                    Nombre = Iteracion.replace("\"", "").replace("[", "").replace(":", "").trim();
+                }
+                contador++;                
+            }else if (Iteracion.contains("]") && !Iteracion.contains("[")){
+                contador--;                
+            }
+            switch (contador){
+                case 0:
+                    if (!Iteracion.contains("{") && !Iteracion.contains("}")){
+                        NombreCompleto = Nombre + ", " + Numeral + " of his name, son of " + padre;
+                        NodoArbol nodo = tablaNombres.busquedaHasheo(NombreCompleto);
+                        NodoArbol PadreMote = tablaMotes.busquedaHasheo(padre);
+                        if (padre.contains("Unknown")){
+                            newArbol.setRaiz(nodo);
+                        } else if(PadreMote != null){
+                            PadreMote.AgregarHijo(nodo);
+                        } else{
+                            Lista posibles = tablaNombres.DevolverPosible(padre);
+                            Nodo current = posibles.getpFirst();
+                            while(current!=null){
+                                String[] Hijos = current.getPersona().getHijos().split(", ");
+                                for(int i = 0; i < Hijos.length; i++){
+                                    if(nodo.getNombre().contains(Hijos[i]) && !Hijos[i].equals("")){
+                                       System.out.println(Hijos[i]);
+                                       current.getPersona().AgregarHijo(nodo);
+                                       break;
+                                    }
+                                }
+                            current = current.getpNext();
+                            }
+                        }
+                                
+                    }
+                    
+                    
+                    NombreCompleto = "";
+                    Nombre = "";
+                    padre = "";
+                    SeenPadre = false;
+                    break;
+                case 1:
+                    if(Iteracion.contains("Of his name")){
+                        Numeral = Iteracion.replace("Of his name", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();   
+                    } else if(Iteracion.contains("Born to")){
+                        if(SeenPadre==false){
+                        padre = Iteracion.replace("Born to", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
+                        SeenPadre = true;
+                        }
+                    }
+                    break;
+            }
+        Iteracion = this.Read();
+    }  
+        return newArbol;
+}
 }

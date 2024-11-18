@@ -4,7 +4,7 @@
  */
 package Main;
 
-
+import Arbol.Arbol;
 import Arbol.NodoArbol;
 import EDD.HashTable;
 import Funciones.JsonChooser;
@@ -28,11 +28,27 @@ public class ProyectoArboles {
         newFile.chooseFile();
         JsonDecoder newChose = new JsonDecoder(newFile.getJson());
         HashTable tabla = newChose.crearHashTable();
-        NodoArbol newNodo = tabla.busquedaHasheo("Baelon  Targaryen, First of his name");
+        NodoArbol newNodo = tabla.busquedaHasheo("Viserys Targaryen, First of his name, son of Aegon the Conqueror");
         HashTable tabla2 = newChose.HashTableMotes(tabla);
-        NodoArbol newNodo2 = tabla2.busquedaHasheo("Baelon Targaryen, First of his name");
-        System.out.println(newNodo.getNombre());
-        System.out.println(newNodo2.getNombre());
+        NodoArbol newNodo2 = tabla2.busquedaHasheo("Daeron the Good");
+        Arbol ar = newChose.crearArbol(tabla, tabla2);
+        NodoArbol hijo = newNodo2.getfSon().getnBrother();
+        NodoArbol root = ar.getRaiz();
+        System.out.println(hijo.getNombre());
+//        System.out.println(newNodo.getNombre());
+        System.out.println(root.getHijos());
+//        System.out.println(newNodo2.getNombre());
+//        System.out.println(newNodo.getNumeral());
+//        System.out.println(newNodo.getPapa());
+//        System.out.println(newNodo.getMama());
+//        System.out.println(newNodo.getApodo());
+//        System.out.println(newNodo.getCasado());
+//        System.out.println(newNodo.getOjos());
+//        System.out.println(newNodo.getPelo());
+//        System.out.println(newNodo.getHijos());
+//        System.out.println(newNodo.getNotas());
+//        System.out.println(newNodo.getDestino());
+//        System.out.println(newNodo.getTitulo());
     }
 
 }
