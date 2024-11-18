@@ -18,6 +18,7 @@ public class HashTable {
     public HashTable(String nombre) {
         this.NombreTabla = nombre;
         this.Hash = new Nodo[1009];
+        this.size = 0;
     }
     
     /**
@@ -39,6 +40,7 @@ public class HashTable {
             }
             current.setpNext(newNodo);
         }
+        this.setSize(this.getSize()+1);
         
     }
     

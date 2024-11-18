@@ -32,8 +32,21 @@ public class TableManager {
     
     public String[] ConseguirNombres(){
         Nodo[] Array = TablaNombre.getHash();
+        int size = TablaNombre.getSize();
+        String[] Nombres = new String[size];
+        int j = 0;
+        for(int i = 0; i < Array.length; i++){
+            Nodo aux = Array[i];
+                while(aux!=null){
+                    Nombres[j] = aux.getNombre();
+                    j++;
+                    aux = aux.getpNext();
+            }
+        }
         
-    }
+        
+        return Nombres;
+        }
     
     /**
      * @return the TablaNombre
