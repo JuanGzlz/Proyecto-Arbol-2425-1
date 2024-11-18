@@ -44,9 +44,49 @@ public class TableManager {
             }
         }
         
-        
         return Nombres;
+    }
+    
+    public String[] ConseguirTitulos(){
+        Nodo[] Array = TablaNombre.getHash();
+        String Titulos = "";
+        for(int i = 0; i < Array.length; i++){
+            Nodo aux = Array[i];
+            while(aux!=null){
+                String TituloNuevo =  aux.getPersona().getTitulo();
+                if(Titulos.equals("")){
+                    Titulos = TituloNuevo;
+                }else{
+                    if(!Titulos.contains(TituloNuevo)){
+                        Titulos = Titulos + ", " + TituloNuevo;
+                    } 
+                }
+                aux = aux.getpNext();
+            }
         }
+        return Titulos.split(", ");
+    }
+    
+    public String[] BuscarPorTitulo(String Titulo){
+        Nodo[] Array = TablaNombre.getHash();
+        String Nombres = "";
+        for(int i = 0; i < Array.length; i++){
+            Nodo aux = Array[i];
+            while(aux!=null){
+                String NombreCompleto =  aux.getNombre();
+                if(Titulo.equals(aux.getPersona().getTitulo())){
+                    if(Nombres.equals("")){
+                        Nombres = NombreCompleto;
+                    }else{
+                            Nombres = Nombres + "123" + NombreCompleto;
+                    }
+                }
+                aux = aux.getpNext();
+            }
+        }
+        return Nombres.split("123");
+        
+    }
     
     /**
      * @return the TablaNombre

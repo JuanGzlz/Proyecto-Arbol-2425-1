@@ -173,6 +173,73 @@ public class NodoArbol {
         return Papa;
     }
     
+    public String DevolverDatos(){
+        String Mama = "";
+        if(this.getMama().equals("")){
+            Mama = "???";
+        } else{
+            Mama = this.getMama();
+        }
+        
+        String Apodo = "";
+        if(this.getApodo().equals("")){
+            Apodo = "???";
+        } else{
+            Apodo = this.getApodo();
+        }
+        
+        String Titulo = "";
+        if(this.getTitulo().equals("")){
+            Titulo = "???";
+        } else{
+            Titulo = this.getTitulo();
+        }
+        
+        String Casado = "";
+        if(this.getCasado().equals("")){
+            Casado = "???";
+        } else{
+            Casado = this.getCasado();
+        }
+        
+        String Hijos = "";
+        if(this.getHijos().equals("")){
+            Hijos = "???";
+        } else{
+            Hijos = this.getHijos();
+        }
+        
+        String Notas = "";
+        if(this.getNotas().equals("")){
+            Notas = "???";
+        } else{
+            Notas = this.getNotas();
+        }
+        
+        String Destino = "";
+        if(this.getDestino().equals("")){
+            Destino = "???";
+        } else{
+            Destino = this.getDestino();
+        }
+        
+        String Datos = """
+                       Nombre: %s
+                       Numeral: %s
+                       Papa: %s
+                       Mama: %s
+                       Apodo: %s
+                       Titulo: %s
+                       Casado a: %s
+                       Ojos: %s
+                       Pelo: %s
+                       Hijos: %s
+                       Notas: %s
+                       Destino: %s
+                       """.formatted(this.getNombre(), this.getNumeral(), this.getPapa(), Mama, Apodo, Titulo, Casado, this.getOjos(), this.getPelo(), Hijos, Notas, Destino);
+        return Datos;
+    }
+    
     
     
 }

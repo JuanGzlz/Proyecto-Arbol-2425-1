@@ -9,6 +9,7 @@ import Arbol.NodoArbol;
 import EDD.HashTable;
 import EDD.Lista;
 import EDD.Nodo;
+import EDD.TableManager;
 import Funciones.JsonChooser;
 import Funciones.JsonDecoder;
 import java.io.IOException;
@@ -33,12 +34,15 @@ public class ProyectoArboles {
         NodoArbol newNodo = tabla.busquedaHasheo("Viserys Targaryen, First of his name, son of Aegon the Conqueror");
         HashTable tabla2 = newChose.HashTableMotes(tabla);
         NodoArbol newNodo2 = tabla2.busquedaHasheo("Daeron the Good");
-        NodoArbol newNodo3 = tabla2.busquedaHasheo("The Old King");
-        Arbol ar = newChose.crearArbol(tabla, tabla2);
-        NodoArbol hijo = newNodo2.getfSon().getnBrother();
-        NodoArbol root = ar.getRaiz();
-        Lista l = ar.DFS(newNodo2);
-        NodoArbol aux = newNodo3.getfSon();
+        NodoArbol newNodo3 = tabla2.busquedaHasheo("Baelor Breakspear");
+        
+        TableManager creador = new TableManager();
+        creador.CrearEstructuras(newChose);
+        String[] a = creador.BuscarPorTitulo("Prince of Dragonstone");
+        for(int i = 0; i < a.length; i++){
+            System.out.println(a[i]);
+        }
+        System.out.println(newNodo3.DevolverDatos());
 //        System.out.println(hijo.getNombre());
 //        System.out.println(newNodo.getNombre());
 //        System.out.println(root.getHijos());
