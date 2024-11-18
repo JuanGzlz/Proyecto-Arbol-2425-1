@@ -38,18 +38,18 @@ public class Lista {
     }
     
     public void eliminateNodo(NodoArbol Nodo){
-        if(this.isEmpty() == false || Nodo != null){
+        if(this.isEmpty() == false && this.NodoExiste(Nodo) == true){
         if (getpFirst().getPersona() == Nodo){
             setpFirst(getpFirst().getpNext());
         }else{
             Nodo aux = getpFirst();
             Nodo prev = getpFirst();
             while (aux != null){
-                if(aux.getPersona() != Nodo){
+                if(aux.getPersona() == Nodo){
                     prev.setpNext(aux.getpNext());
                     aux.setpNext(null);
                     setSize(getSize()-1);
-                    return ;
+                    return;
                 }
                 prev = aux;
                 aux = aux.getpNext();

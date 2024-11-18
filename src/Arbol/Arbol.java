@@ -5,6 +5,7 @@
 package Arbol;
 
 import EDD.Lista;
+import EDD.Nodo;
 
 /**
  *
@@ -37,24 +38,24 @@ public class Arbol {
     }
     
     public Lista DFS_Recursivo(NodoArbol Actual, NodoArbol Resultado, Lista Linaje){
+        System.out.println(Actual.getNombre());
+        System.out.println(Actual.getNumeral());
         Linaje.addLast(Actual);
         if (Actual == Resultado){
+            boolean a = Linaje.NodoExiste(Resultado);
+            Nodo aux = Linaje.getpFirst();
             return Linaje;
         }else if(Actual.getfSon() != null){
             Linaje = DFS_Recursivo(Actual.getfSon(), Resultado, Linaje);
             if (Linaje.NodoExiste(Resultado) == true){
                 return Linaje;
-            }else{
-                Linaje.eliminateNodo(Actual);
             }
         }
-        
+            Linaje.eliminateNodo(Actual);
+                
         if (Actual.getnBrother() != null){
             Linaje = DFS_Recursivo(Actual.getnBrother(), Resultado, Linaje);
             if (Linaje.NodoExiste(Resultado) == true){
-                return Linaje;
-            }else{
-                Linaje.eliminateNodo(Actual);
                 return Linaje;
             }
         }
