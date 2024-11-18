@@ -37,22 +37,36 @@ public class Lista {
         setSize(getSize()+1);
     }
     
-    public void eliminateNodo(String nombre){
-        if(!isEmpty() && nombre != null){
-        if (getpFirst().getNombre().equals(nombre)){
+    public void eliminateNodo(NodoArbol Nodo){
+        if(this.isEmpty() == false || Nodo != null){
+        if (getpFirst().getPersona() == Nodo){
             setpFirst(getpFirst().getpNext());
         }else{
             Nodo aux = getpFirst();
             Nodo prev = getpFirst();
-            while (!aux.getNombre().equals(nombre)){
+            while (aux != null){
+                if(aux.getPersona() != Nodo){
+                    prev.setpNext(aux.getpNext());
+                    aux.setpNext(null);
+                    setSize(getSize()-1);
+                    return ;
+                }
                 prev = aux;
                 aux = aux.getpNext();
             }
-            prev.setpNext(aux.getpNext());
-            aux.setpNext(null);
         }
-        setSize(getSize()-1);
         }
+    }
+    
+    public boolean NodoExiste(NodoArbol Nodo){
+        Nodo aux = this.getpFirst();
+        while(aux != null){
+            if (aux.getPersona() == Nodo){
+                return true;
+            }
+            aux = aux.getpNext();
+        }
+        return false;
     }
     
     public Nodo buscarNodo(String nombre){
