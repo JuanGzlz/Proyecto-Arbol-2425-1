@@ -21,23 +21,26 @@ public class ArbolVisualizer implements ViewerListener{
     private Arbol arbol;
     private HashTable tabla;
     private boolean loop;
+    private Viewer viewer;
+    private ViewerPipe fromViewer;
     
     
     public ArbolVisualizer(Arbol arbolito, HashTable tabla) {
         this.arbol = arbolito;
         this.tabla = tabla;
-        this.graph = new MultiGraph("GRAFO: ");
+        this.graph = null;
         this.loop = true;
         System.setProperty("org.graphstream.ui", "swing");
     }
     
     public void mostrarArbol() {
-        this.CrearRelacion();
-        Viewer viewer = graph.display();
+        this.graph = new SingleGraph("GRAFO: Game of Thrones");
+        this.viewer = graph.display();
         viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
-        ViewerPipe fromViewer = viewer.newViewerPipe();
+        this.fromViewer = viewer.newViewerPipe();
         fromViewer.addViewerListener(this);
 	fromViewer.addSink(this.graph);
+        this.CrearRelacion();
 
 		// Then we need a loop to do our work and to wait for events.
 		// In this loop we will need to call the
@@ -61,7 +64,6 @@ public class ArbolVisualizer implements ViewerListener{
         @Override
 	public void viewClosed(String id) {
 		loop = false;
-                this.graph.clear();
 	}
 
         @Override
@@ -85,7 +87,7 @@ public class ArbolVisualizer implements ViewerListener{
 	public void buttonReleased(String id) {
             
         }
-    
+
     public void CrearRelacion(){
         NodoArbol root = arbol.getRaiz();
         AgregarHijos(root);
@@ -106,12 +108,32 @@ public class ArbolVisualizer implements ViewerListener{
                 this.graph.getNode(Hijo.NombreCompleto()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
             }
             this.graph.addEdge(visita.NombreCompleto() + "-" + Hijo.NombreCompleto(), visita.NombreCompleto(), Hijo.NombreCompleto());
+            for(int i = 0; i < HijosCompleto.length; i++){
+                if(Hijo.getNombre().contains(HijosCompleto[i])){
+                    HijosCompleto[i] = "null";
+                }
+            }
             AgregarHijos(Hijo);
             Hijo = Hijo.getnBrother();
         }
+        for(int i = 0; i < HijosCompleto.length; i++){
+            if(!HijosCompleto[i].equals("null") && !HijosCompleto[i].equals("")){
+                this.graph.addNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.label", HijosCompleto[i]);
+                this.graph.getNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
+                this.graph.addEdge(visita.NombreCompleto() + "-" + HijosCompleto[i] + " hijo de " + visita.getNombre(), visita.NombreCompleto(), HijosCompleto[i] + " hijo de " + visita.getNombre());
+            }
+        }
     }
-    
-    
+
+    @Override
+    public void mouseOver(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseLeft(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
 
 

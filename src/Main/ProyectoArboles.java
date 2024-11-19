@@ -27,7 +27,7 @@ public class ProyectoArboles {
      */
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         JsonChooser newFile = new JsonChooser();
         newFile.chooseFile();
         JsonDecoder newChose = new JsonDecoder(newFile.getJson());
