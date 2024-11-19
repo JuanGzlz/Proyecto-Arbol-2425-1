@@ -37,28 +37,25 @@ public class Arbol {
         return DFS_Recursivo(this.getRaiz(), Resultado, Linaje);
     }
     
-    public Lista DFS_Recursivo(NodoArbol Actual, NodoArbol Resultado, Lista Linaje){
-        System.out.println(Actual.getNombre());
-        System.out.println(Actual.getNumeral());
+    private Lista DFS_Recursivo(NodoArbol Actual, NodoArbol Resultado, Lista Linaje){
         Linaje.addLast(Actual);
-        if (Actual == Resultado){
-            boolean a = Linaje.NodoExiste(Resultado);
-            Nodo aux = Linaje.getpFirst();
+        if (Actual.NombreCompleto().equals(Resultado.NombreCompleto())){
+            System.out.println("AAAAAAAAAAAAAA");
             return Linaje;
         }else if(Actual.getfSon() != null){
-            Linaje = DFS_Recursivo(Actual.getfSon(), Resultado, Linaje);
-            if (Linaje.NodoExiste(Resultado) == true){
-                return Linaje;
+            Lista ResultadoHijo = DFS_Recursivo(Actual.getfSon(), Resultado, Linaje);
+            if (ResultadoHijo.NodoExiste(Resultado) == true){
+                return ResultadoHijo;
             }
         }
-            Linaje.eliminateNodo(Actual);
                 
         if (Actual.getnBrother() != null){
-            Linaje = DFS_Recursivo(Actual.getnBrother(), Resultado, Linaje);
-            if (Linaje.NodoExiste(Resultado) == true){
-                return Linaje;
+            Lista ResultadoHermano = DFS_Recursivo(Actual.getnBrother(), Resultado, Linaje);
+            if (ResultadoHermano.NodoExiste(Resultado) == true){
+                return ResultadoHermano;
             }
         }
+        Linaje.eliminateNodo(Actual);
         return Linaje;
     }
 }

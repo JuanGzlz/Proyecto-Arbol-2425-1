@@ -12,12 +12,10 @@ import Arbol.NodoArbol;
  */
 public class Lista {
     private Nodo pFirst;
-    private Nodo pLast;
     private int size;
 
     public Lista() {
         this.pFirst = null;
-        this.pLast = null;
         this.size = 0;
     }
     
@@ -28,30 +26,30 @@ public class Lista {
     public void addLast (NodoArbol tree){
         Nodo NuevoNodo = new Nodo(tree.getNombre(), tree);
         if (isEmpty()){
-            setpFirst(NuevoNodo);
-            setpLast(NuevoNodo);
+            this.setpFirst(NuevoNodo);
         } else{
-            getpLast().setpNext(NuevoNodo);
-            setpLast(NuevoNodo);
+            Nodo aux = this.getpFirst();
+            while(aux.getpNext()!=null){
+                aux = aux.getpNext();
+            }
+            aux.setpNext(NuevoNodo);
         }
         setSize(getSize()+1);
     }
     
     public void eliminateNodo(NodoArbol Nodo){
-        if(this.isEmpty() == false && this.NodoExiste(Nodo) == true){
+        if(this.isEmpty() == false){
         if (getpFirst().getPersona() == Nodo){
             setpFirst(getpFirst().getpNext());
         }else{
             Nodo aux = getpFirst();
-            Nodo prev = getpFirst();
-            while (aux != null){
-                if(aux.getPersona() == Nodo){
-                    prev.setpNext(aux.getpNext());
-                    aux.setpNext(null);
+            while (aux.getpNext() != null){
+                if(aux.getpNext().getPersona() == Nodo){
+                    aux.setpNext(aux.getpNext().getpNext());
                     setSize(getSize()-1);
+                    System.out.println("Se elimino " + Nodo.getNombre() + " " + Nodo.getNumeral());
                     return;
                 }
-                prev = aux;
                 aux = aux.getpNext();
             }
         }
@@ -95,20 +93,6 @@ public class Lista {
      */
     public void setpFirst(Nodo pFirst) {
         this.pFirst = pFirst;
-    }
-
-    /**
-     * @return the pLast
-     */
-    public Nodo getpLast() {
-        return pLast;
-    }
-
-    /**
-     * @param pLast the pLast to set
-     */
-    public void setpLast(Nodo pLast) {
-        this.pLast = pLast;
     }
 
     /**
