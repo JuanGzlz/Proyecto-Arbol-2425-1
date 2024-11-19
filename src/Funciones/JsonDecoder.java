@@ -282,6 +282,9 @@ public class JsonDecoder {
                                     if(nodo.getNombre().contains(Hijos[i]) && !Hijos[i].equals("") && padre.contains(current.getPersona().getNumeral())){
                                        current.getPersona().AgregarHijo(nodo);
                                        break;
+                                    } else if(!padre.contains("of his name")){
+                                       current.getPersona().AgregarHijo(nodo);
+                                       break;
                                     }
                                 }
                             current = current.getpNext();
