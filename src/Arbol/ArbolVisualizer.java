@@ -26,7 +26,7 @@ public class ArbolVisualizer implements ViewerListener{
     public ArbolVisualizer(Arbol arbolito, HashTable tabla) {
         this.arbol = arbolito;
         this.tabla = tabla;
-        this.graph = new SingleGraph("GRAFO: ");
+        this.graph = new MultiGraph("GRAFO: ");
         this.loop = true;
         System.setProperty("org.graphstream.ui", "swing");
     }
