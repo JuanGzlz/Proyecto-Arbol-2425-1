@@ -15,10 +15,21 @@ import org.graphstream.ui.view.ViewerPipe;
 import org.graphstream.ui.view.ViewerListener;
 
 /**
- *
+ * Clase para visualizar un árbol de datos utilizando GraphStream.
+ * Permite representar un árbol como un grafo, interactuar con sus nodos y 
+ * visualizar relaciones y linajes en un entorno gráfico.
+ * 
  * @author valen
  */
 public class ArbolVisualizer implements ViewerListener{
+    /**
+     * @param graph Grafo que representa visualmente el árbol.
+     * @param arbol Árbol que se desea visualizar.
+     * @param tabla hash table que almacena datos de los nodos del árbol para búsquedas rápidas.
+     * @param loop Indicador de bucle para mantener el programa interactivo.
+     * @param viewer Objeto Viewer de GraphStream para manejar la visualización.
+     * @param fromViewer Objeto ViewerPipe para interactuar con el grafo.
+     */
     private Graph graph;
     private Arbol arbol;
     private HashTable tabla;
@@ -26,7 +37,12 @@ public class ArbolVisualizer implements ViewerListener{
     private Viewer viewer;
     private ViewerPipe fromViewer;
     
-    
+    /**
+     * Constructor de la clase.
+     * 
+     * @param arbolito El árbol que se desea visualizar.
+     * @param tabla La hash table con información de los nodos.
+     */
     public ArbolVisualizer(Arbol arbolito, HashTable tabla) {
         this.arbol = arbolito;
         this.tabla = tabla;
@@ -35,6 +51,11 @@ public class ArbolVisualizer implements ViewerListener{
         System.setProperty("org.graphstream.ui", "swing");
     }
     
+     /**
+     * Muestra visualmente el árbol en una ventana utilizando GraphStream.
+     * Establece la estructura inicial del grafo basada en el árbol y
+     * mantiene un bucle para gestionar eventos interactivos.
+     */
     public void mostrarArbol() {
         this.graph = new SingleGraph("GRAFO: Game of Thrones");
         this.viewer = graph.display();
@@ -44,22 +65,8 @@ public class ArbolVisualizer implements ViewerListener{
 	fromViewer.addSink(this.graph);
         this.CrearRelacion();
 
-		// Then we need a loop to do our work and to wait for events.
-		// In this loop we will need to call the
-		// pump() method before each use of the graph to copy back events
-		// that have already occurred in the viewer thread inside
-		// our thread.
-
 	while(loop) {
 		fromViewer.pump(); // or fromViewer.blockingPump(); in the nightly builds
-
-			// here your simulation code.
-
-			// You do not necessarily need to use a loop, this is only an example.
-			// as long as you call pump() before using the graph. pump() is non
-			// blocking.  If you only use the loop to look at event, use blockingPump()
-			// to avoid 100% CPU usage. The blockingPump() method is only available from
-			// the nightly builds.
 	}
     }
     
@@ -87,9 +94,21 @@ public class ArbolVisualizer implements ViewerListener{
 
         @Override
 	public void buttonReleased(String id) {
-            
+            //no hace nada
+        }
+        @Override
+        public void mouseOver(String string) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
 
+        @Override
+        public void mouseLeft(String string) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+    /**
+     * Crea las relaciones entre los nodos del árbol para construir el grafo.
+     */
     public void CrearRelacion(){
         NodoArbol root = arbol.getRaiz();
         AgregarHijos(root);
@@ -97,6 +116,11 @@ public class ArbolVisualizer implements ViewerListener{
         
     }
     
+    /**
+     * Agrega los nodos hijos y las relaciones al grafo de forma recursiva.
+     * 
+     * @param visita Nodo actual que se está procesando.
+     */
     private void AgregarHijos(NodoArbol visita){
         if(this.graph.getNode(visita.NombreCompleto())==null){
             this.graph.addNode(visita.NombreCompleto()).setAttribute("ui.label", visita.getNombre() + ", " + visita.getNumeral() + " of his name");
@@ -126,17 +150,12 @@ public class ArbolVisualizer implements ViewerListener{
             }
         }
     }
-
-    @Override
-    public void mouseOver(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void mouseLeft(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
+    /**
+     * Muestra visualmente una lista de linajes como un grafo.
+     * 
+     * @param Linaje Lista que contiene los nodos de linaje a visualizar.
+     */
     public void mostrarAntepasados(Lista Linaje) {
         this.graph = new SingleGraph("GRAFO: Lista Linaje");
         this.viewer = graph.display();
@@ -145,26 +164,16 @@ public class ArbolVisualizer implements ViewerListener{
         fromViewer.addViewerListener(this);
 	fromViewer.addSink(this.graph);
         this.AgregarLinaje(Linaje);
-
-		// Then we need a loop to do our work and to wait for events.
-		// In this loop we will need to call the
-		// pump() method before each use of the graph to copy back events
-		// that have already occurred in the viewer thread inside
-		// our thread.
-
 	while(loop) {
 		fromViewer.pump(); // or fromViewer.blockingPump(); in the nightly builds
-
-			// here your simulation code.
-
-			// You do not necessarily need to use a loop, this is only an example.
-			// as long as you call pump() before using the graph. pump() is non
-			// blocking.  If you only use the loop to look at event, use blockingPump()
-			// to avoid 100% CPU usage. The blockingPump() method is only available from
-			// the nightly builds.
 	}
     }
     
+    /**
+     * Agrega nodos y relaciones de linaje al grafo.
+     * 
+     * @param Linaje Lista de nodos que representan el linaje.
+     */
     public void AgregarLinaje(Lista Linaje){
         Nodo aux = Linaje.getpFirst();
         while(aux != null){

@@ -10,7 +10,10 @@ import Funciones.JsonDecoder;
 import java.io.IOException;
 
 /**
- *
+ * Clase que gestiona la interacción con estructuras de datos como hash tables y el árbol.
+ * Permite crear y manipular estructuras, así como realizar consultas específicas como
+ * búsqueda por título, generación o mote.
+ * 
  * @author valen
  */
 public class TableManager {
@@ -19,18 +22,33 @@ public class TableManager {
     private HashTable TablaMote;
     private Arbol Tree;
     
+    /**
+     * Constructor de la clase TableManager.
+     * Inicializa las estructuras de datos como null.
+     */
     public TableManager(){
         TablaNombre = null;
         TablaMote = null;
         Tree = null;
     }
     
+    /**
+     * Crea las estructuras de datos necesarias a partir de un archivo JSON.
+     * 
+     * @param Archivo el objeto JsonDecoder que contiene los métodos para construir las estructuras.
+     * @throws IOException si ocurre un error al procesar el archivo JSON.
+     */
     public void CrearEstructuras(JsonDecoder Archivo) throws IOException{
         TablaNombre = Archivo.crearHashTable();
         TablaMote = Archivo.HashTableMotes(TablaNombre);
         Tree = Archivo.crearArbol(TablaNombre, TablaMote);
     }
     
+    /**
+     * Obtiene todos los nombres almacenados en la hash table de nombres.
+     * 
+     * @return un arreglo de strings con los nombres encontrados.
+     */
     public String[] ConseguirNombres(){
         Nodo[] Array = TablaNombre.getHash();
         int size = TablaNombre.getSize();
@@ -48,6 +66,11 @@ public class TableManager {
         return Nombres;
     }
     
+    /**
+     * Obtiene todos los motes almacenados en la hash table de motes.
+     * 
+     * @return un arreglo de strings con los motes encontrados.
+     */
     public String[] ConseguirMotes(){
         Nodo[] Array = TablaMote.getHash();
         int size = TablaMote.getSize();
@@ -65,6 +88,11 @@ public class TableManager {
         return Nombres;
     }
     
+    /**
+     * Obtiene todos los títulos únicos encontrados en la hash table de nombres.
+     * 
+     * @return un arreglo de strings con los títulos únicos.
+     */
     public String[] ConseguirTitulos(){
         Nodo[] Array = TablaNombre.getHash();
         String Titulos = "";
@@ -85,6 +113,12 @@ public class TableManager {
         return Titulos.split(", ");
     }
     
+    /**
+     * Busca los nombres asociados a un título específico.
+     * 
+     * @param Titulo el título a buscar.
+     * @return un arreglo de strings con los nombres que tienen el título especificado.
+     */
     public String[] BuscarPorTitulo(String Titulo){
         Nodo[] Array = TablaNombre.getHash();
         String Nombres = "";
@@ -127,6 +161,11 @@ public class TableManager {
         return Tree;
     }
     
+    /**
+     * Obtiene las generaciones presentes en el árbol.
+     * 
+     * @return un arreglo de strings con las generaciones (ejemplo, "Generación 1").
+     */
     public String[] ConseguirGeneraciones(){
     int nodos_por_capa = 1;
     int nodos_por_ver = 0;
@@ -165,6 +204,12 @@ public class TableManager {
         return Generaciones.split("qwerty");
     }
     
+    /**
+     * Busca los nodos que pertenecen a una generación específica.
+     * 
+     * @param Generacion la generación a buscar (ejemplo, "Generación 2").
+     * @return un arreglo de strings con los nombres de los nodos de esa generación.
+     */
     public String[] BuscarPorGeneracion(String Generacion){
         String Numero = Generacion.replace("Generacion ", "");
         int Profundidad_Deseada = Integer.parseInt(Numero);
@@ -202,7 +247,6 @@ public class TableManager {
             Nombres[i] = aux.NombreCompleto();
             
         }
-        
         
         return Nombres;
     }

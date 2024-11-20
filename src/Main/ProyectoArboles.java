@@ -46,8 +46,8 @@ public class ProyectoArboles {
             System.out.println(aux.getPersona().getNumeral());
             aux = aux.getpNext();
         }
-//        ArbolVisualizer g = new ArbolVisualizer(creador.getTree(), creador.getTablaNombre());
-//        g.mostrarArbol();
+        ArbolVisualizer g = new ArbolVisualizer(creador.getTree(), creador.getTablaNombre());
+       g.mostrarArbol();
     }
 
 }

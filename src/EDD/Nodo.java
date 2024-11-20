@@ -7,14 +7,23 @@ import Arbol.NodoArbol;
 
 
 /**
- *
+ * Clase que representa un nodo de una lista enlazada.
+ * Cada nodo almacena un objeto de tipo NodoArbol, un nombre, 
+ * y una referencia al siguiente nodo en la lista.
+ * 
  * @author Admin
  */
 public class Nodo {
     private String Nombre;
     private NodoArbol Persona;
     private Nodo pNext;
-
+    
+    /**
+     * Constructor de la clase Nodo.
+     * 
+     * @param Nombre el nombre asociado al nodo.
+     * @param Persona el objeto NodoArbol que contiene la información del nodo.
+     */
     public Nodo(String Nombre, NodoArbol Persona) {
         this.Nombre = Nombre;
         this.Persona = Persona;

@@ -40,7 +40,8 @@ public class JsonChooser {
     }
     
     /**
-     * Método que permite seleccionar el archivo json con las paradas pasando a su vez un filtro que solo permita ingresar este tipo de archivos
+     * Método que permite seleccionar el archivo json con las familias pasando a 
+     * su vez un filtro que solo permita ingresar este tipo de archivos
      */
     
     public void chooseFile(){

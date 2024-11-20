@@ -15,8 +15,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Clase JsonDecoder
- * Incluye toda la decodificación del archivo json para convertir las paradas en Strings y así luego en vértices para la creación del grado
+ * Clase encargada de decodificar un archivo JSON para procesar y construir estructuras
+ * de datos relacionadas con jerarquías familiares.
+ * Permite extraer información y transformarla en hash tables, árboles y otras estructuras.
+ * 
  * @author Juan González
  * @version 1.0
  */
@@ -27,17 +29,18 @@ public class JsonDecoder {
     * @param NewBufferedReader variable de tipo BufferedReader que permite leer el json por caracteres, matrices y cadenas de manera eficiente
     * @param text variable de tipo String que representa un texto para realizar pruebas de este decodificador (uso no definido)
     */
-    
     private File file;
     private BufferedReader NewBufferedReader;
     private String text;
-    
+       
     /**
-     * Constructor de la clase JsonDecoder, recibiendo el archivo elegido en JsonChooser como parámetro de entrada
+     * Constructor que inicializa el lector de archivo con el JSON proporcionado.
      * Automáticamente asigna la variable file al valor de la entrada
      * Los Readers son asignados a la lectura del propio file que representa el archivo ingresado
+     * 
+     * @param file archivo JSON a decodificar.
+     * @throws FileNotFoundException si el archivo no existe.
      */
-    
     public JsonDecoder(File file) throws FileNotFoundException{
         this.file = file;
         FileReader NewFileReader = new FileReader(this.file);
@@ -45,27 +48,30 @@ public class JsonDecoder {
     }
     
     /**
-     * Función que entrega una sola línea de texto del archivo json
-     * @return variable de tipo String con una única línea de texto (la respectiva parada del archivo json)
+     * Lee una línea del archivo JSON.
+     * 
+     * @return una línea del archivo en formato String.
+     * @throws IOException si ocurre un error durante la lectura.
      */
-    
     public String Read() throws FileNotFoundException, IOException{
         return this.NewBufferedReader.readLine();
     }
     
     /**
-     * Método que devuelve la función Read() al inicio, es decir, la primera línea de texto del archivo
+     * Reinicia el lector del archivo, posicionándolo nuevamente al inicio del JSON.
+     * 
+     * @throws FileNotFoundException si el archivo no existe.
      */
-    
     public void Reset() throws FileNotFoundException{
         FileReader NewFileReader = new FileReader(this.file);
         this.NewBufferedReader = new BufferedReader(NewFileReader);
     }
     
-    /**
-     * Método que lee cada línea del json exactamente una vez
+     /**
+     * Lee y muestra en consola todo el contenido del archivo JSON línea por línea.
+     * 
+     * @throws IOException si ocurre un error durante la lectura.
      */
-    
     public void ReadAll() throws FileNotFoundException, IOException{
         FileReader NewFileReader = new FileReader(this.file);
         BufferedReader MyBuffer = new BufferedReader(NewFileReader);
@@ -77,10 +83,11 @@ public class JsonDecoder {
     }
     
     /**
-     * Función que entrega exactamente el nombre del sistema de metro completo al estar siempre en la segunda línea del archivo json
-     * @return variable de tipo String con el nombre de la red de transporte
+     * Obtiene el nombre la casa a partir de la segunda línea del JSON.
+     * 
+     * @return el nombre de la casa.
+     * @throws IOException si ocurre un error durante la lectura.
      */
-    
     public String CasaNombre() throws FileNotFoundException, IOException{
         this.Reset();
         this.Read();
@@ -90,15 +97,13 @@ public class JsonDecoder {
     }
     
     /**
-     * Función que gestiona la obtención del grafo mediante dos vueltas...
-     * 1era Vuelta: Crea los vértices con el nombre de cada parada, quitando todos los caracteres innecesarios y así obteniendo el grafo en sí
-     * 2da Vuelta: Crea las conexiones entre los vértices, revisando diversas condiciones según la parada sea una que conecta con otra línea o si es una parada común y fija
-     * @return variable de tipo Grafo que representa el grafo del sistema de transporte en su totalidad y ya estructurado gráficamente
-     * @throws java.io.IOException
+     * Crea una hash table basada en la información extraída del JSON. Procesa
+     * nombres, atributos y relaciones para estructurarlas en nodos.
+     * 
+     * @return una HashTable que contiene los nodos creados a partir del JSON.
+     * @throws IOException si ocurre un error durante la lectura.
      */
-    
     @SuppressWarnings("empty-statement")
-   
     public HashTable crearHashTable() throws IOException{
         String N = this.CasaNombre();
         HashTable tabla = new HashTable(N);
@@ -151,6 +156,15 @@ public class JsonDecoder {
         return tabla;
     }
     
+    /**
+     * Método auxiliar para procesar y guardar atributos individuales de los nodos.
+     * 
+     * @param Linea línea actual del JSON.
+     * @param Array arreglo que almacena temporalmente los atributos del nodo.
+     * @param Madre bandera para identificar si se está procesando la madre del nodo.
+     * @return el arreglo actualizado con los nuevos datos.
+     * @throws IOException si ocurre un error durante la lectura.
+     */   
     private String[] GuardarDatos(String Linea, String[] Array, boolean Madre) throws IOException{
         if (Linea.contains("Of his name")){
             Array[1] = Linea.replace("Of his name", "").replace("\"", "").replace("{", "").replace("}", "").replace(",", "").replace(":", "").trim();
@@ -173,6 +187,13 @@ public class JsonDecoder {
         return Array;
     }
     
+    /**
+     * Método auxiliar para procesar y guardar hijos de un nodo.
+     * 
+     * @param Linea línea actual del JSON.
+     * @param Array arreglo que almacena temporalmente los datos del nodo.
+     * @return el arreglo actualizado con los hijos procesados.
+     */
     private String[] GuardarHijos(String Linea, String[] Array){
         if(Linea.contains("Father to")){
             return Array;
@@ -185,6 +206,14 @@ public class JsonDecoder {
         return Array;
     }
     
+    /**
+     * Construye una hash table secundaria utilizando motes para los nodos.
+     * Se basa en la información procesada previamente en la tabla principal.
+     * 
+     * @param Tabla hash table principal que contiene los nodos originales.
+     * @return una nueva HashTable que utiliza los motes como claves.
+     * @throws IOException si ocurre un error durante la lectura.
+     */
     public HashTable HashTableMotes(HashTable Tabla) throws IOException{
         this.Reset();
         String N = this.CasaNombre();
@@ -243,6 +272,15 @@ public class JsonDecoder {
         return NuevaTabla;
     }
     
+     /**
+     * Construye un árbol basado en la información del JSON. Las relaciones entre nodos
+     * padre e hijo se definen según los datos de nacimiento y jerarquías.
+     * 
+     * @param tablaNombres hash table principal con los nodos originales.
+     * @param tablaMotes hash table secundaria con motes como claves.
+     * @return un árbol que representa la jerarquía procesada.
+     * @throws IOException si ocurre un error durante la lectura.
+     */
     public Arbol crearArbol(HashTable tablaNombres, HashTable tablaMotes) throws FileNotFoundException, IOException{
         this.Reset();
         String N = this.CasaNombre();
@@ -313,5 +351,5 @@ public class JsonDecoder {
         Iteracion = this.Read();
     }  
         return newArbol;
-}
+    }
 }
