@@ -68,7 +68,6 @@ public class Arbol {
     private Lista DFS_Recursivo(NodoArbol Actual, NodoArbol Resultado, Lista Linaje){
         Linaje.addLast(Actual);
         if (Actual.NombreCompleto().equals(Resultado.NombreCompleto())){
-            System.out.println("AAAAAAAAAAAAAA");
             return Linaje;
         }else if(Actual.getfSon() != null){
             Lista ResultadoHijo = DFS_Recursivo(Actual.getfSon(), Resultado, Linaje);
@@ -76,6 +75,8 @@ public class Arbol {
                 return ResultadoHijo;
             }
         }
+        
+        Linaje.eliminateNodo(Actual);
                 
         if (Actual.getnBrother() != null){
             Lista ResultadoHermano = DFS_Recursivo(Actual.getnBrother(), Resultado, Linaje);
@@ -83,7 +84,6 @@ public class Arbol {
                 return ResultadoHermano;
             }
         }
-        Linaje.eliminateNodo(Actual);
         return Linaje;
     }
 }

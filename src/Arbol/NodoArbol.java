@@ -274,11 +274,11 @@ public class NodoArbol {
         String Datos = """
                        Nombre: %s
                        Numeral: %s
-                       Papa: %s
-                       Mama: %s
+                       Padre: %s
+                       Madre: %s
                        Apodo: %s
                        Titulo: %s
-                       Casado a: %s
+                       Esposa: %s
                        Ojos: %s
                        Pelo: %s
                        Hijos: %s
