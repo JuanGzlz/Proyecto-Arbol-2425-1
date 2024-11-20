@@ -61,15 +61,14 @@ public class Lista {
      */
     public void eliminateNodo(NodoArbol Nodo){
         if(this.isEmpty() == false){
-        if (getpFirst().getPersona() == Nodo){
+        if (getpFirst().getPersona().NombreCompleto().equals(Nodo.NombreCompleto())){
             setpFirst(getpFirst().getpNext());
         }else{
             Nodo aux = getpFirst();
             while (aux.getpNext() != null){
-                if(aux.getpNext().getPersona() == Nodo){
+                if(aux.getpNext().getPersona().NombreCompleto().equals(Nodo.NombreCompleto())){
                     aux.setpNext(aux.getpNext().getpNext());
                     setSize(getSize()-1);
-                    System.out.println("Se elimino " + Nodo.getNombre() + " " + Nodo.getNumeral());
                     return;
                 }
                 aux = aux.getpNext();
@@ -87,7 +86,7 @@ public class Lista {
     public boolean NodoExiste(NodoArbol Nodo){
         Nodo aux = this.getpFirst();
         while(aux != null){
-            if (aux.getPersona() == Nodo){
+            if (aux.getPersona().NombreCompleto().equals(Nodo.NombreCompleto())){
                 return true;
             }
             aux = aux.getpNext();

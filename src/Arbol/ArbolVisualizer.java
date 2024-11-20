@@ -77,7 +77,7 @@ public class ArbolVisualizer implements ViewerListener{
 
         @Override
 	public void buttonPushed(String id) {
-                graph.getNode(id).setAttribute("ui.style", "fill-color: green;");
+                graph.getNode(id).setAttribute("ui.style", "fill-color: blue;");
                 NodoArbol N = this.tabla.busquedaHasheo(id);
                 if(N==null){
                     JOptionPane.showMessageDialog(null,
@@ -89,7 +89,7 @@ public class ArbolVisualizer implements ViewerListener{
                     (Datos),
                         "", JOptionPane.INFORMATION_MESSAGE);
                 }
-                graph.getNode(id).setAttribute("ui.style", "fill-color: red;");
+                graph.getNode(id).setAttribute("ui.style", "fill-color: green;");
 	}
 
         @Override
@@ -124,14 +124,14 @@ public class ArbolVisualizer implements ViewerListener{
     private void AgregarHijos(NodoArbol visita){
         if(this.graph.getNode(visita.NombreCompleto())==null){
             this.graph.addNode(visita.NombreCompleto()).setAttribute("ui.label", visita.getNombre() + ", " + visita.getNumeral() + " of his name");
-            this.graph.getNode(visita.NombreCompleto()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
+            this.graph.getNode(visita.NombreCompleto()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
         }
         NodoArbol Hijo = visita.getfSon();
         String[] HijosCompleto = visita.getHijos().split(", ");
         while(Hijo != null){
             if(this.graph.getNode(Hijo.NombreCompleto())==null){
                 this.graph.addNode(Hijo.NombreCompleto()).setAttribute("ui.label", Hijo.getNombre() + ", " + Hijo.getNumeral() + " of his name");
-                this.graph.getNode(Hijo.NombreCompleto()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
+                this.graph.getNode(Hijo.NombreCompleto()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
             }
             this.graph.addEdge(visita.NombreCompleto() + "-" + Hijo.NombreCompleto(), visita.NombreCompleto(), Hijo.NombreCompleto());
             for(int i = 0; i < HijosCompleto.length; i++){
@@ -145,7 +145,7 @@ public class ArbolVisualizer implements ViewerListener{
         for(int i = 0; i < HijosCompleto.length; i++){
             if(!HijosCompleto[i].equals("null") && !HijosCompleto[i].equals("")){
                 this.graph.addNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.label", HijosCompleto[i]);
-                this.graph.getNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
+                this.graph.getNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
                 this.graph.addEdge(visita.NombreCompleto() + "-" + HijosCompleto[i] + " hijo de " + visita.getNombre(), visita.NombreCompleto(), HijosCompleto[i] + " hijo de " + visita.getNombre());
             }
         }
@@ -176,18 +176,19 @@ public class ArbolVisualizer implements ViewerListener{
      */
     public void AgregarLinaje(Lista Linaje){
         Nodo aux = Linaje.getpFirst();
-        while(aux != null){
+        int j = 0;
+        while(j < Linaje.getSize() - 1){
         NodoArbol visita = aux.getPersona();
         if(this.graph.getNode(visita.NombreCompleto())==null){
             this.graph.addNode(visita.NombreCompleto()).setAttribute("ui.label", visita.getNombre() + ", " + visita.getNumeral() + " of his name");
-            this.graph.getNode(visita.NombreCompleto()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
+            this.graph.getNode(visita.NombreCompleto()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
         }
         NodoArbol Hijo = visita.getfSon();
         String[] HijosCompleto = visita.getHijos().split(", ");
         while(Hijo != null){
             if(this.graph.getNode(Hijo.NombreCompleto())==null){
                 this.graph.addNode(Hijo.NombreCompleto()).setAttribute("ui.label", Hijo.getNombre() + ", " + Hijo.getNumeral() + " of his name");
-                this.graph.getNode(Hijo.NombreCompleto()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
+                this.graph.getNode(Hijo.NombreCompleto()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
             }
             this.graph.addEdge(visita.NombreCompleto() + "-" + Hijo.NombreCompleto(), visita.NombreCompleto(), Hijo.NombreCompleto());
             for(int i = 0; i < HijosCompleto.length; i++){
@@ -200,12 +201,14 @@ public class ArbolVisualizer implements ViewerListener{
         for(int i = 0; i < HijosCompleto.length; i++){
             if(!HijosCompleto[i].equals("null") && !HijosCompleto[i].equals("")){
                 this.graph.addNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.label", HijosCompleto[i]);
-                this.graph.getNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
+                this.graph.getNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
                 this.graph.addEdge(visita.NombreCompleto() + "-" + HijosCompleto[i] + " hijo de " + visita.getNombre(), visita.NombreCompleto(), HijosCompleto[i] + " hijo de " + visita.getNombre());
             }
         }
+        j++;
         aux = aux.getpNext();
         }
+        this.graph.getNode(aux.getPersona().NombreCompleto()).setAttribute("ui.style", "fill-color: yellow;");
     }
     
 }

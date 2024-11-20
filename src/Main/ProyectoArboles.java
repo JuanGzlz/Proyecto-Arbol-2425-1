@@ -41,13 +41,8 @@ public class ProyectoArboles {
         creador.CrearEstructuras(newChose);
         Lista l = creador.getTree().DFS(newNodo2);
         Nodo aux = l.getpFirst();
-        while(aux != null){
-            System.out.println(aux.getPersona().getNombre());
-            System.out.println(aux.getPersona().getNumeral());
-            aux = aux.getpNext();
-        }
         ArbolVisualizer g = new ArbolVisualizer(creador.getTree(), creador.getTablaNombre());
-       g.mostrarArbol();
+        g.mostrarAntepasados(l);
     }
 
 }
