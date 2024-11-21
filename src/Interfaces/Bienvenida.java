@@ -47,7 +47,7 @@ public class Bienvenida extends javax.swing.JFrame {
         getContentPane().add(iniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 140, 50));
 
         jLabel2.setFont(new java.awt.Font("Baskerville Old Face", 1, 30)); // NOI18N
-        jLabel2.setText("BIENVENID@ AL LINAJE DE ");
+        jLabel2.setText("Bienvenid@ al linaje de... ");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 430, -1));
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
