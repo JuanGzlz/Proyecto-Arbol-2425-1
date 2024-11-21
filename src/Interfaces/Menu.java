@@ -5,7 +5,9 @@
 package Interfaces;
 
 import Arbol.ArbolVisualizer;
+import Arbol.NodoArbol;
 import EDD.HashTable;
+import EDD.Lista;
 import EDD.TableManager;
 import Funciones.JsonChooser;
 import Funciones.JsonDecoder;
@@ -28,6 +30,8 @@ public class Menu extends javax.swing.JFrame {
     private JsonDecoder newChose;
     private ArbolVisualizer Arbolito;
     private TableManager TableControlador;
+    private HashTable HashNombres;
+    private HashTable HashMotes;
     public Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -180,11 +184,69 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void antepasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_antepasadosActionPerformed
-        
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null){
+            this.TableControlador = InterfazFunciones.getControlador();
+            this.HashNombres = InterfazFunciones.getHashTablaNombres();
+            this.HashMotes = InterfazFunciones.getHashTablaMotes();
+            String[] A = this.TableControlador.ConseguirNombres();
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            if (S != null){
+                NodoArbol N = this.HashNombres.busquedaHasheo(S);
+                if(N==null){
+                    JOptionPane.showMessageDialog(null,
+                    ("No se tiene información sobre esta persona."),
+                    "", JOptionPane.INFORMATION_MESSAGE);
+                    Lista l = this.TableControlador.getTree().DFS(N);
+                    this.Arbolito.mostrarAntepasados(l);
+                } else{
+                    String Datos = N.DevolverDatos();
+                    JOptionPane.showMessageDialog(null,
+                    (Datos),
+                    "", JOptionPane.INFORMATION_MESSAGE);
+                    Lista l = this.TableControlador.getTree().DFS(N);
+                    this.Arbolito.mostrarAntepasados(l);
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Seleccione una persona correctamente.");
+            }
+        }else {
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún árbol.");
+        }         
     }//GEN-LAST:event_antepasadosActionPerformed
 
     private void listaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaActionPerformed
-        
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null){
+            this.TableControlador = InterfazFunciones.getControlador();
+            this.HashNombres = InterfazFunciones.getHashTablaNombres();
+            this.HashMotes = InterfazFunciones.getHashTablaMotes();
+            String[] A = this.TableControlador.ConseguirGeneraciones();
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una generación:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            if (S != null){
+                String[] B = this.TableControlador.BuscarPorGeneracion(S);
+                String T = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, B, DISPOSE_ON_CLOSE);
+                if (T != null){
+                    NodoArbol N = this.HashNombres.busquedaHasheo(T);
+                    if(N==null){
+                        JOptionPane.showMessageDialog(null,
+                        ("No se tiene información sobre esta persona."),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    } else{
+                        String Datos = N.DevolverDatos();
+                        JOptionPane.showMessageDialog(null,
+                        (Datos),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Seleccione una persona correctamente.");
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Seleccione una generación correctamente.");
+            }
+        }else {
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún árbol.");
+        }          
     }//GEN-LAST:event_listaActionPerformed
 
     private void cargarjsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarjsonActionPerformed
@@ -194,11 +256,15 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Su archivo fue cargado exitosamente.");
             try {
                 newChose = new JsonDecoder(file.getJson());
-                TableManager creador = new TableManager();
-                creador.CrearEstructuras(newChose);
-                InterfazFunciones.setControlador(creador);
-                ArbolVisualizer AV = new ArbolVisualizer(creador.getTree(), creador.getTablaNombre());
-                InterfazFunciones.setArbol(AV);
+                TableControlador = new TableManager();
+                TableControlador.CrearEstructuras(newChose);
+                InterfazFunciones.setControlador(TableControlador);
+                Arbolito = new ArbolVisualizer(TableControlador.getTree(), TableControlador.getTablaNombre());
+                InterfazFunciones.setArbol(Arbolito);
+                HashNombres = newChose.crearHashTable();
+                InterfazFunciones.setHashTablaNombres(HashNombres);
+                HashMotes = newChose.HashTableMotes(HashNombres);
+                InterfazFunciones.setHashTablaMotes(HashMotes);
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
@@ -212,38 +278,37 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_cargarjsonActionPerformed
 
     private void buscartituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscartituloActionPerformed
-//        Grafo g = InterfazFunciones.getGrafo();
-//        if (g != null){
-//            TableManager T = new 
-//            Funcionalidades f = new Funcionalidades();
-//            int i = 0;
-//            Vertice v = g.getListaParadas().getpFirst();
-//            while(v!= null){
-//                for(int j = 0; j < v.getNombre().length; j++){
-//                    i++;
-//                }
-//                v = v.getpNext();
-//            }
-//            String[] A = new String[i];
-//            i = 0;
-//            v = g.getListaParadas().getpFirst();
-//            while(v!=null){
-//                for(int j = 0; j < v.getNombre().length; j++){
-//                    A[i] = v.getNombre()[j];
-//                    i++;
-//                }
-//                v = v.getpNext();
-//            }
-//            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una parada:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
-//            if (S != null){
-//                v = g.busquedaInicial(S);
-//                f.seleccionarSucursal(g, v, T);
-//            }else{
-//                JOptionPane.showMessageDialog(rootPane, "Seleccione una parada correctamente.");
-//            }
-//        }else {
-//            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún grafo.");
-//        }
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null){
+            this.TableControlador = InterfazFunciones.getControlador();
+            this.HashNombres = InterfazFunciones.getHashTablaNombres();
+            this.HashMotes = InterfazFunciones.getHashTablaMotes();
+            String[] A = this.TableControlador.ConseguirTitulos();
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione un título:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            if (S != null){
+                String[] B = this.TableControlador.BuscarPorTitulo(S);
+                String T = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, B, DISPOSE_ON_CLOSE);
+                if (T != null){
+                    NodoArbol N = this.HashNombres.busquedaHasheo(T);
+                    if(N==null){
+                        JOptionPane.showMessageDialog(null,
+                        ("No se tiene información sobre esta persona."),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    } else{
+                        String Datos = N.DevolverDatos();
+                        JOptionPane.showMessageDialog(null,
+                        (Datos),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Seleccione una persona correctamente.");
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Seleccione un título correctamente.");
+            }
+        }else {
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún árbol.");
+        }
     }//GEN-LAST:event_buscartituloActionPerformed
 
     private void buscarnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarnombreActionPerformed
@@ -253,7 +318,7 @@ public class Menu extends javax.swing.JFrame {
     private void mostrararbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrararbolActionPerformed
         this.Arbolito = InterfazFunciones.getArbol();
         if (this.Arbolito != null) {
-            new Thread(() -> this.Arbolito.mostrarArbol()).start();
+            this.Arbolito.mostrarArbol();
             
         }else {
             JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún archivo Json para leer.");

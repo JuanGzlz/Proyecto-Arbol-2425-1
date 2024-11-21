@@ -222,7 +222,7 @@ public class TableManager {
         C.encolar(aux);
 
         while(!C.isEmpty()){
-            if(nodos_por_capa==0){ //Paso a la siguiente generacion
+            if(nodos_por_capa==0 || Profundidad_Actual == Profundidad_Deseada){ //Paso a la siguiente generacion
                 nodos_por_capa = nodos_por_ver;
                 nodos_por_ver = 0;
                 Profundidad_Actual++;
