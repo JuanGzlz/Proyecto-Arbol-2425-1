@@ -25,6 +25,9 @@ public class Menu extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
+    private JsonDecoder newChose;
+    private ArbolVisualizer Arbolito;
+    private TableManager TableControlador;
     public Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -150,7 +153,7 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().add(antepasados, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, -1, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/download__1_-removebg-preview (2) (1).png"))); // NOI18N
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 110, 110));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 130, 120));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/beige__1_-removebg-preview.png"))); // NOI18N
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, -1, -1));
@@ -188,18 +191,14 @@ public class Menu extends javax.swing.JFrame {
         JsonChooser file = new JsonChooser();
         file.chooseFile();
         if (file.getJson() != null){
-            JsonDecoder json;
             JOptionPane.showMessageDialog(null, "Su archivo fue cargado exitosamente.");
             try {
-                json = new JsonDecoder(file.getJson());
-                HashTable tablaNombres = json.crearHashTable();
-                HashTable tablaMotes = json.HashTableMotes(tablaNombres);
+                newChose = new JsonDecoder(file.getJson());
                 TableManager creador = new TableManager();
-                creador.CrearEstructuras(json);
-                System.out.println(creador.getTree().getRaiz().getNombre());
-                System.out.println(creador.getTree().getRaiz().getNumeral());
-                ArbolVisualizer g = new ArbolVisualizer(creador.getTree(), creador.getTablaNombre());
-                g.mostrarArbol();
+                creador.CrearEstructuras(newChose);
+                InterfazFunciones.setControlador(creador);
+                ArbolVisualizer AV = new ArbolVisualizer(creador.getTree(), creador.getTablaNombre());
+                InterfazFunciones.setArbol(AV);
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
@@ -213,38 +212,38 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_cargarjsonActionPerformed
 
     private void buscartituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscartituloActionPerformed
-        Grafo g = InterfazFunciones.getGrafo();
-        if (g != null){
-            TableManager T = new 
-            Funcionalidades f = new Funcionalidades();
-            int i = 0;
-            Vertice v = g.getListaParadas().getpFirst();
-            while(v!= null){
-                for(int j = 0; j < v.getNombre().length; j++){
-                    i++;
-                }
-                v = v.getpNext();
-            }
-            String[] A = new String[i];
-            i = 0;
-            v = g.getListaParadas().getpFirst();
-            while(v!=null){
-                for(int j = 0; j < v.getNombre().length; j++){
-                    A[i] = v.getNombre()[j];
-                    i++;
-                }
-                v = v.getpNext();
-            }
-            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una parada:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
-            if (S != null){
-                v = g.busquedaInicial(S);
-                f.seleccionarSucursal(g, v, T);
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Seleccione una parada correctamente.");
-            }
-        }else {
-            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún grafo.");
-        }
+//        Grafo g = InterfazFunciones.getGrafo();
+//        if (g != null){
+//            TableManager T = new 
+//            Funcionalidades f = new Funcionalidades();
+//            int i = 0;
+//            Vertice v = g.getListaParadas().getpFirst();
+//            while(v!= null){
+//                for(int j = 0; j < v.getNombre().length; j++){
+//                    i++;
+//                }
+//                v = v.getpNext();
+//            }
+//            String[] A = new String[i];
+//            i = 0;
+//            v = g.getListaParadas().getpFirst();
+//            while(v!=null){
+//                for(int j = 0; j < v.getNombre().length; j++){
+//                    A[i] = v.getNombre()[j];
+//                    i++;
+//                }
+//                v = v.getpNext();
+//            }
+//            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una parada:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+//            if (S != null){
+//                v = g.busquedaInicial(S);
+//                f.seleccionarSucursal(g, v, T);
+//            }else{
+//                JOptionPane.showMessageDialog(rootPane, "Seleccione una parada correctamente.");
+//            }
+//        }else {
+//            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún grafo.");
+//        }
     }//GEN-LAST:event_buscartituloActionPerformed
 
     private void buscarnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarnombreActionPerformed
@@ -252,9 +251,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_buscarnombreActionPerformed
 
     private void mostrararbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrararbolActionPerformed
-         this.g = InterfazFunciones.getArbol();
-        if (this.g != null) {
-            this.g.mostrarArbol();
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null) {
+            new Thread(() -> this.Arbolito.mostrarArbol()).start();
             
         }else {
             JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún archivo Json para leer.");

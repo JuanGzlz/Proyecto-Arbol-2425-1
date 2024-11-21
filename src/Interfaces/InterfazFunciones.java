@@ -91,7 +91,18 @@ public class InterfazFunciones {
         InterfazFunciones.VisualArbol = Arbol;
     }
 
-    
-    
-    
+    /**
+     * @return the controlador
+     */
+    public static TableManager getControlador() {
+        return controlador;
+    }
+
+    /**
+     * @param aControlador the controlador to set
+     */
+    public static void setControlador(TableManager aControlador) {
+        controlador = aControlador;
+    }
+
 }
