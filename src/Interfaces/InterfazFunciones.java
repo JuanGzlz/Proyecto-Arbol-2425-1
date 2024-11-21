@@ -5,6 +5,7 @@
 package Interfaces;
 
 import Arbol.ArbolVisualizer;
+import EDD.HashTable;
 import EDD.TableManager;
 
 /**
@@ -15,7 +16,8 @@ public class InterfazFunciones {
     
     private static ArbolVisualizer VisualArbol = null;
     private static TableManager controlador = null;
-    
+    private static HashTable hashTablaNombres = null;
+    private static HashTable hashTablaMotes = null;
     
     private static final Bienvenida paginaprincipal= new Bienvenida(); 
     private static final Menu menu =new Menu();
@@ -85,13 +87,52 @@ public class InterfazFunciones {
     }
 
     /**
-     * @param aArbol the arbol to set
+     * @param Arbol the arbol to set
      */
     public static void setArbol(ArbolVisualizer Arbol) {
         InterfazFunciones.VisualArbol = Arbol;
     }
 
-    
-    
-    
+    /**
+     * @return the controlador
+     */
+    public static TableManager getControlador() {
+        return controlador;
+    }
+
+    /**
+     * @param aControlador the controlador to set
+     */
+    public static void setControlador(TableManager aControlador) {
+        InterfazFunciones.controlador = aControlador;
+    }
+
+    /**
+     * @return the hashTabla
+     */
+    public static HashTable getHashTablaNombres() {
+        return hashTablaNombres;
+    }
+
+    /**
+     * @param aHashTabla the hashTabla to set
+     */
+    public static void setHashTablaNombres(HashTable aHashTabla) {
+        InterfazFunciones.hashTablaNombres = aHashTabla;
+    }
+
+    /**
+     * @return the hashTablaMotes
+     */
+    public static HashTable getHashTablaMotes() {
+        return hashTablaMotes;
+    }
+
+    /**
+     * @param aHashTablaMotes the hashTablaMotes to set
+     */
+    public static void setHashTablaMotes(HashTable aHashTablaMotes) {
+        hashTablaMotes = aHashTablaMotes;
+    }
+
 }

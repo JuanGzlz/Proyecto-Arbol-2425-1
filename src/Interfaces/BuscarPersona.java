@@ -4,6 +4,15 @@
  */
 package Interfaces;
 
+import Arbol.ArbolVisualizer;
+import Arbol.NodoArbol;
+import EDD.HashTable;
+import EDD.Lista;
+import EDD.TableManager;
+import static java.awt.image.ImageObserver.HEIGHT;
+import javax.swing.JOptionPane;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+
 /**
  *
  * @author User
@@ -105,11 +114,63 @@ public class BuscarPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_volverActionPerformed
 
     private void buscarpormoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarpormoteActionPerformed
-        // TODO add your handling code here:
+        ArbolVisualizer AV = InterfazFunciones.getArbol();
+        if (AV != null){
+            TableManager TableControlador = InterfazFunciones.getControlador();
+            HashTable HashNombres = InterfazFunciones.getHashTablaNombres();
+            HashTable HashMotes = InterfazFunciones.getHashTablaMotes();
+            String[] A = TableControlador.ConseguirMotes();
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            if (S != null){
+                NodoArbol N = HashMotes.busquedaHasheo(S);
+                if(N==null){
+                    JOptionPane.showMessageDialog(null,
+                    ("No se tiene información sobre esta persona."),
+                    "", JOptionPane.INFORMATION_MESSAGE);
+                    AV.mostrarDescendencia(N);
+                } else{
+                    String Datos = N.DevolverDatos();
+                    JOptionPane.showMessageDialog(null,
+                    (Datos),
+                    "", JOptionPane.INFORMATION_MESSAGE);
+                    AV.mostrarDescendencia(N);
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Seleccione una persona correctamente.");
+            }
+        }else {
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún árbol.");
+        }  
     }//GEN-LAST:event_buscarpormoteActionPerformed
 
     private void buscarpornombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarpornombreActionPerformed
-        // TODO add your handling code here:
+        ArbolVisualizer AV = InterfazFunciones.getArbol();
+        if (AV != null){
+            TableManager TableControlador = InterfazFunciones.getControlador();
+            HashTable HashNombres = InterfazFunciones.getHashTablaNombres();
+            HashTable HashMotes = InterfazFunciones.getHashTablaMotes();
+            String[] A = TableControlador.ConseguirNombres();
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            if (S != null){
+                NodoArbol N = HashNombres.busquedaHasheo(S);
+                if(N==null){
+                    JOptionPane.showMessageDialog(null,
+                    ("No se tiene información sobre esta persona."),
+                    "", JOptionPane.INFORMATION_MESSAGE);
+                    AV.mostrarDescendencia(N);
+                } else{
+                    String Datos = N.DevolverDatos();
+                    JOptionPane.showMessageDialog(null,
+                    (Datos),
+                    "", JOptionPane.INFORMATION_MESSAGE);
+                    AV.mostrarDescendencia(N);
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Seleccione una persona correctamente.");
+            }
+        }else {
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún árbol.");
+        }  
     }//GEN-LAST:event_buscarpornombreActionPerformed
 
     /**

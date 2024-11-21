@@ -5,7 +5,9 @@
 package Interfaces;
 
 import Arbol.ArbolVisualizer;
+import Arbol.NodoArbol;
 import EDD.HashTable;
+import EDD.Lista;
 import EDD.TableManager;
 import Funciones.JsonChooser;
 import Funciones.JsonDecoder;
@@ -25,6 +27,11 @@ public class Menu extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
+    private JsonDecoder newChose;
+    private ArbolVisualizer Arbolito;
+    private TableManager TableControlador;
+    private HashTable HashNombres;
+    private HashTable HashMotes;
     public Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -150,7 +157,7 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().add(antepasados, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, -1, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/download__1_-removebg-preview (2) (1).png"))); // NOI18N
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 110, 110));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 130, 120));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/beige__1_-removebg-preview.png"))); // NOI18N
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, -1, -1));
@@ -177,29 +184,87 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void antepasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_antepasadosActionPerformed
-        
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null){
+            this.TableControlador = InterfazFunciones.getControlador();
+            this.HashNombres = InterfazFunciones.getHashTablaNombres();
+            this.HashMotes = InterfazFunciones.getHashTablaMotes();
+            String[] A = this.TableControlador.ConseguirNombres();
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            if (S != null){
+                NodoArbol N = this.HashNombres.busquedaHasheo(S);
+                if(N==null){
+                    JOptionPane.showMessageDialog(null,
+                    ("No se tiene información sobre esta persona."),
+                    "", JOptionPane.INFORMATION_MESSAGE);
+                    Lista l = this.TableControlador.getTree().DFS(N);
+                    this.Arbolito.mostrarAntepasados(l);
+                } else{
+                    String Datos = N.DevolverDatos();
+                    JOptionPane.showMessageDialog(null,
+                    (Datos),
+                    "", JOptionPane.INFORMATION_MESSAGE);
+                    Lista l = this.TableControlador.getTree().DFS(N);
+                    this.Arbolito.mostrarAntepasados(l);
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Seleccione una persona correctamente.");
+            }
+        }else {
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún árbol.");
+        }         
     }//GEN-LAST:event_antepasadosActionPerformed
 
     private void listaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaActionPerformed
-        
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null){
+            this.TableControlador = InterfazFunciones.getControlador();
+            this.HashNombres = InterfazFunciones.getHashTablaNombres();
+            this.HashMotes = InterfazFunciones.getHashTablaMotes();
+            String[] A = this.TableControlador.ConseguirGeneraciones();
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una generación:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            if (S != null){
+                String[] B = this.TableControlador.BuscarPorGeneracion(S);
+                String T = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, B, DISPOSE_ON_CLOSE);
+                if (T != null){
+                    NodoArbol N = this.HashNombres.busquedaHasheo(T);
+                    if(N==null){
+                        JOptionPane.showMessageDialog(null,
+                        ("No se tiene información sobre esta persona."),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    } else{
+                        String Datos = N.DevolverDatos();
+                        JOptionPane.showMessageDialog(null,
+                        (Datos),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Seleccione una persona correctamente.");
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Seleccione una generación correctamente.");
+            }
+        }else {
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún árbol.");
+        }          
     }//GEN-LAST:event_listaActionPerformed
 
     private void cargarjsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarjsonActionPerformed
         JsonChooser file = new JsonChooser();
         file.chooseFile();
         if (file.getJson() != null){
-            JsonDecoder json;
             JOptionPane.showMessageDialog(null, "Su archivo fue cargado exitosamente.");
             try {
-                json = new JsonDecoder(file.getJson());
-                HashTable tablaNombres = json.crearHashTable();
-                HashTable tablaMotes = json.HashTableMotes(tablaNombres);
-                TableManager creador = new TableManager();
-                creador.CrearEstructuras(json);
-                System.out.println(creador.getTree().getRaiz().getNombre());
-                System.out.println(creador.getTree().getRaiz().getNumeral());
-                ArbolVisualizer g = new ArbolVisualizer(creador.getTree(), creador.getTablaNombre());
-                g.mostrarArbol();
+                newChose = new JsonDecoder(file.getJson());
+                TableControlador = new TableManager();
+                TableControlador.CrearEstructuras(newChose);
+                InterfazFunciones.setControlador(TableControlador);
+                Arbolito = new ArbolVisualizer(TableControlador.getTree(), TableControlador.getTablaNombre());
+                InterfazFunciones.setArbol(Arbolito);
+                HashNombres = newChose.crearHashTable();
+                InterfazFunciones.setHashTablaNombres(HashNombres);
+                HashMotes = newChose.HashTableMotes(HashNombres);
+                InterfazFunciones.setHashTablaMotes(HashMotes);
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
@@ -213,37 +278,36 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_cargarjsonActionPerformed
 
     private void buscartituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscartituloActionPerformed
-        Grafo g = InterfazFunciones.getGrafo();
-        if (g != null){
-            TableManager T = new 
-            Funcionalidades f = new Funcionalidades();
-            int i = 0;
-            Vertice v = g.getListaParadas().getpFirst();
-            while(v!= null){
-                for(int j = 0; j < v.getNombre().length; j++){
-                    i++;
-                }
-                v = v.getpNext();
-            }
-            String[] A = new String[i];
-            i = 0;
-            v = g.getListaParadas().getpFirst();
-            while(v!=null){
-                for(int j = 0; j < v.getNombre().length; j++){
-                    A[i] = v.getNombre()[j];
-                    i++;
-                }
-                v = v.getpNext();
-            }
-            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una parada:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null){
+            this.TableControlador = InterfazFunciones.getControlador();
+            this.HashNombres = InterfazFunciones.getHashTablaNombres();
+            this.HashMotes = InterfazFunciones.getHashTablaMotes();
+            String[] A = this.TableControlador.ConseguirTitulos();
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione un título:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
             if (S != null){
-                v = g.busquedaInicial(S);
-                f.seleccionarSucursal(g, v, T);
+                String[] B = this.TableControlador.BuscarPorTitulo(S);
+                String T = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, B, DISPOSE_ON_CLOSE);
+                if (T != null){
+                    NodoArbol N = this.HashNombres.busquedaHasheo(T);
+                    if(N==null){
+                        JOptionPane.showMessageDialog(null,
+                        ("No se tiene información sobre esta persona."),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    } else{
+                        String Datos = N.DevolverDatos();
+                        JOptionPane.showMessageDialog(null,
+                        (Datos),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Seleccione una persona correctamente.");
+                }
             }else{
-                JOptionPane.showMessageDialog(rootPane, "Seleccione una parada correctamente.");
+                JOptionPane.showMessageDialog(rootPane, "Seleccione un título correctamente.");
             }
         }else {
-            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún grafo.");
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún árbol.");
         }
     }//GEN-LAST:event_buscartituloActionPerformed
 
@@ -252,9 +316,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_buscarnombreActionPerformed
 
     private void mostrararbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrararbolActionPerformed
-         this.g = InterfazFunciones.getArbol();
-        if (this.g != null) {
-            this.g.mostrarArbol();
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null) {
+            this.Arbolito.mostrarArbol();
             
         }else {
             JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún archivo Json para leer.");
