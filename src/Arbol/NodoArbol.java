@@ -8,7 +8,7 @@ package Arbol;
  * Clase NodoArbol
  * Representa un nodo en un árbol con múltiples atributos personales y conexiones familiares.
  * Incluye referencias al primer hijo y al siguiente hermano en la estructura jerárquica.
- * @author Admin
+ * @author Valentina Vegas
  * @version 1.0
  */
 public class NodoArbol {

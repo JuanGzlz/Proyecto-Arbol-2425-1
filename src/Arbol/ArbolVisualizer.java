@@ -19,7 +19,7 @@ import org.graphstream.ui.view.ViewerListener;
  * Permite representar un árbol como un grafo, interactuar con sus nodos y 
  * visualizar relaciones y linajes en un entorno gráfico.
  * 
- * @author valen
+ * @author Valentina Vegas & Juan González
  */
 public class ArbolVisualizer implements ViewerListener{
     /**
@@ -222,13 +222,16 @@ public class ArbolVisualizer implements ViewerListener{
     }
     
     public void mostrarDescendencia(NodoArbol Elegido) {
-        this.graph = new SingleGraph("GRAFO: Lista Linaje");
+        this.graph = new SingleGraph("GRAFO: Descendientes");
         this.viewer = graph.display();
         viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
         this.fromViewer = viewer.newViewerPipe();
         fromViewer.addViewerListener(this);
 	fromViewer.addSink(this.graph);
-        this.AgregarDescendencia(Elegido);
+        
+        this.AgregarHijos(Elegido);
+        this.graph.getNode(Elegido.NombreCompleto()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
+    
         this.loop = true;
         
 	new Thread(() -> {
@@ -236,40 +239,6 @@ public class ArbolVisualizer implements ViewerListener{
                     fromViewer.pump(); // or fromViewer.blockingPump(); in the nightly builds
             }
 	}).start();
-    }
-    
-    private void AgregarDescendencia(NodoArbol visita){
-        if(this.graph.getNode(visita.NombreCompleto())==null){
-            this.graph.addNode(visita.NombreCompleto()).setAttribute("ui.label", visita.getNombre() + ", " + visita.getNumeral() + " of his name");
-            this.graph.getNode(visita.NombreCompleto()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
-        }
-        NodoArbol Hijo = visita.getfSon();
-        String[] HijosCompleto = visita.getHijos().split(", ");
-        for(int i = 0; i < HijosCompleto.length; i++){
-            System.out.println(HijosCompleto[i]);
-        }
-        System.out.println("");
-        while(Hijo != null){
-            if(this.graph.getNode(Hijo.NombreCompleto())==null){
-                this.graph.addNode(Hijo.NombreCompleto()).setAttribute("ui.label", Hijo.getNombre() + ", " + Hijo.getNumeral() + " of his name");
-                this.graph.getNode(Hijo.NombreCompleto()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
-            }
-            this.graph.addEdge(visita.NombreCompleto() + "-" + Hijo.NombreCompleto(), visita.NombreCompleto(), Hijo.NombreCompleto());
-            for(int i = 0; i < HijosCompleto.length; i++){
-                if(Hijo.getNombre().contains(HijosCompleto[i])){
-                    HijosCompleto[i] = "null";
-                }
-            }
-            AgregarDescendencia(Hijo);
-            Hijo = Hijo.getnBrother();
-        }
-        for(int i = 0; i < HijosCompleto.length; i++){
-            if(!HijosCompleto[i].equals("null") && !HijosCompleto[i].equals("")){
-                this.graph.addNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.label", HijosCompleto[i]);
-                this.graph.getNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
-                this.graph.addEdge(visita.NombreCompleto() + "-" + HijosCompleto[i] + " hijo de " + visita.getNombre(), visita.NombreCompleto(), HijosCompleto[i] + " hijo de " + visita.getNombre());
-            }
-        }
     }
 }
 

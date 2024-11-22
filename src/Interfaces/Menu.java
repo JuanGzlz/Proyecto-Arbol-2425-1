@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author User
+ * @author María Correa
  */
 public class Menu extends javax.swing.JFrame {
 
@@ -187,12 +187,10 @@ public class Menu extends javax.swing.JFrame {
         this.Arbolito = InterfazFunciones.getArbol();
         if (this.Arbolito != null){
             this.TableControlador = InterfazFunciones.getControlador();
-            this.HashNombres = InterfazFunciones.getHashTablaNombres();
-            this.HashMotes = InterfazFunciones.getHashTablaMotes();
             String[] A = this.TableControlador.ConseguirNombres();
             String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
             if (S != null){
-                NodoArbol N = this.HashNombres.busquedaHasheo(S);
+                NodoArbol N = this.TableControlador.BusquedaNombres(S);
                 if(N==null){
                     JOptionPane.showMessageDialog(null,
                     ("No se tiene información sobre esta persona."),
@@ -219,15 +217,13 @@ public class Menu extends javax.swing.JFrame {
         this.Arbolito = InterfazFunciones.getArbol();
         if (this.Arbolito != null){
             this.TableControlador = InterfazFunciones.getControlador();
-            this.HashNombres = InterfazFunciones.getHashTablaNombres();
-            this.HashMotes = InterfazFunciones.getHashTablaMotes();
             String[] A = this.TableControlador.ConseguirGeneraciones();
             String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una generación:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
             if (S != null){
                 String[] B = this.TableControlador.BuscarPorGeneracion(S);
                 String T = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, B, DISPOSE_ON_CLOSE);
                 if (T != null){
-                    NodoArbol N = this.HashNombres.busquedaHasheo(T);
+                    NodoArbol N = this.TableControlador.BusquedaNombres(T);
                     if(N==null){
                         JOptionPane.showMessageDialog(null,
                         ("No se tiene información sobre esta persona."),
@@ -274,22 +270,19 @@ public class Menu extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Seleccione un archivo correctamente.");
         }                                           
-
     }//GEN-LAST:event_cargarjsonActionPerformed
 
     private void buscartituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscartituloActionPerformed
         this.Arbolito = InterfazFunciones.getArbol();
         if (this.Arbolito != null){
             this.TableControlador = InterfazFunciones.getControlador();
-            this.HashNombres = InterfazFunciones.getHashTablaNombres();
-            this.HashMotes = InterfazFunciones.getHashTablaMotes();
             String[] A = this.TableControlador.ConseguirTitulos();
             String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione un título:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
             if (S != null){
                 String[] B = this.TableControlador.BuscarPorTitulo(S);
                 String T = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, B, DISPOSE_ON_CLOSE);
                 if (T != null){
-                    NodoArbol N = this.HashNombres.busquedaHasheo(T);
+                    NodoArbol N = this.TableControlador.BusquedaNombres(T);
                     if(N==null){
                         JOptionPane.showMessageDialog(null,
                         ("No se tiene información sobre esta persona."),

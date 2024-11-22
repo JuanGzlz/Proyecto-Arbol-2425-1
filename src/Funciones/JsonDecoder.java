@@ -19,7 +19,7 @@ import java.io.IOException;
  * de datos relacionadas con jerarquías familiares.
  * Permite extraer información y transformarla en hash tables, árboles y otras estructuras.
  * 
- * @author Juan González
+ * @author Juan González & Valentina Vegas
  * @version 1.0
  */
 

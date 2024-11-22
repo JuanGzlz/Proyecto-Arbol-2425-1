@@ -6,7 +6,7 @@ package Interfaces;
 
 /**
  *
- * @author User
+ * @author María Correa
  */
 public class Bienvenida extends javax.swing.JFrame {
 
