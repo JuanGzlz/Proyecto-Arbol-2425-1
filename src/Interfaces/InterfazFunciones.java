@@ -10,7 +10,7 @@ import EDD.TableManager;
 
 /**
  *
- * @author User
+ * @author María Correa
  */
 public class InterfazFunciones {
     

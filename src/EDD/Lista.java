@@ -11,7 +11,7 @@ import Arbol.NodoArbol;
  * La lista permite almacenar nodos que contienen objetos de tipo NodoArbol.
  * Incluye operaciones básicas como agregar, eliminar, buscar y verificar la existencia de nodos.
  * 
- * @author Admin
+ * @author María Correa
  */
 public class Lista {
     private Nodo pFirst;

@@ -10,7 +10,7 @@ import static java.lang.Math.abs;
  * Clase que implementa una hash table con manejo de colisiones mediante listas enlazadas.
  * Permite insertar, buscar y listar elementos almacenados en la hash table.
  * Cada posición de la tabla es un nodo que puede contener una lista enlazada de nodos en caso de colisiones.
- * @author Admin
+ * @author Juan González
  */
 public class HashTable {
     private String NombreTabla;

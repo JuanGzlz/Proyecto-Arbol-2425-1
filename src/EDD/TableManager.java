@@ -14,7 +14,7 @@ import java.io.IOException;
  * Permite crear y manipular estructuras, así como realizar consultas específicas como
  * búsqueda por título, generación o mote.
  * 
- * @author valen
+ * @author Valentina Vegas & Juan González
  */
 public class TableManager {
     

@@ -15,7 +15,7 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 /**
  *
- * @author User
+ * @author María Correa
  */
 public class BuscarPersona extends javax.swing.JFrame {
 

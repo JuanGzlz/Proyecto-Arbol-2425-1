@@ -19,7 +19,7 @@ import org.graphstream.ui.view.ViewerListener;
  * Permite representar un árbol como un grafo, interactuar con sus nodos y 
  * visualizar relaciones y linajes en un entorno gráfico.
  * 
- * @author valen
+ * @author Valentina Vegas & Juan González
  */
 public class ArbolVisualizer implements ViewerListener{
     /**
