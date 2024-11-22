@@ -117,12 +117,10 @@ public class BuscarPersona extends javax.swing.JFrame {
         ArbolVisualizer AV = InterfazFunciones.getArbol();
         if (AV != null){
             TableManager TableControlador = InterfazFunciones.getControlador();
-            HashTable HashNombres = InterfazFunciones.getHashTablaNombres();
-            HashTable HashMotes = InterfazFunciones.getHashTablaMotes();
             String[] A = TableControlador.ConseguirMotes();
             String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
             if (S != null){
-                NodoArbol N = HashMotes.busquedaHasheo(S);
+                NodoArbol N = TableControlador.BusquedaMotes(S);
                 if(N==null){
                     JOptionPane.showMessageDialog(null,
                     ("No se tiene información sobre esta persona."),
@@ -147,12 +145,10 @@ public class BuscarPersona extends javax.swing.JFrame {
         ArbolVisualizer AV = InterfazFunciones.getArbol();
         if (AV != null){
             TableManager TableControlador = InterfazFunciones.getControlador();
-            HashTable HashNombres = InterfazFunciones.getHashTablaNombres();
-            HashTable HashMotes = InterfazFunciones.getHashTablaMotes();
             String[] A = TableControlador.ConseguirNombres();
             String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
             if (S != null){
-                NodoArbol N = HashNombres.busquedaHasheo(S);
+                NodoArbol N = TableControlador.BusquedaNombres(S);
                 if(N==null){
                     JOptionPane.showMessageDialog(null,
                     ("No se tiene información sobre esta persona."),
