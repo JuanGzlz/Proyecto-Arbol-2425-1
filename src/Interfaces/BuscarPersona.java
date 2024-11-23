@@ -13,14 +13,16 @@ import static java.awt.image.ImageObserver.HEIGHT;
 import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
+
 /**
- *
- * @author María Correa
+ * Clase interfaz BuscarPersona
+ * @author Macorre21
+ * @version 1.0
  */
 public class BuscarPersona extends javax.swing.JFrame {
 
-    /**
-     * Creates new form BuscarNombre
+     /**
+     * Constructor de la clase interfaz BuscarPersona, no recibe parámetro de entrada
      */
     public BuscarPersona() {
         initComponents();
@@ -84,7 +86,7 @@ public class BuscarPersona extends javax.swing.JFrame {
         });
         getContentPane().add(buscarpormote, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 300, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/6135265.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/european-name-badge__1_-removebg-preview.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/11273270.png"))); // NOI18N
@@ -97,8 +99,8 @@ public class BuscarPersona extends javax.swing.JFrame {
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/2cdJe2yF6uy5LDRni2hxAvnEkM0-mobile-removebg-preview (1).png"))); // NOI18N
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 200, 200));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/game-of-thrones-wallpaper-background.jpg"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/game-of-thrones-wallpaper-background (1).jpg"))); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 430));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/png-transparent-circle-area-point-angle-white-gray-circle-angle-other-white-thumbnail-removebg-preview (1) (1).png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, 200, 200));
@@ -113,6 +115,13 @@ public class BuscarPersona extends javax.swing.JFrame {
         InterfazFunciones.VolverMenu();
     }//GEN-LAST:event_volverActionPerformed
 
+     /**
+     * @param evt
+     * En principio se genera una lista desplegable con todos los nombres que se encuentren dentro del Json para que 
+     * el usuario pueda seleccionar el nombre en específico de quien quiera saber su información.
+     * Función que te permite buscar a una persona por su nombre y una vez que te muestre su información, 
+     * se mostrará el árbol genealógico a partir de él.
+     */
     private void buscarpormoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarpormoteActionPerformed
         ArbolVisualizer AV = InterfazFunciones.getArbol();
         if (AV != null){
@@ -141,6 +150,13 @@ public class BuscarPersona extends javax.swing.JFrame {
         }  
     }//GEN-LAST:event_buscarpormoteActionPerformed
 
+     /**
+     * @param evt
+     * En principio se genera una lista desplegable con todas las personas que tengan un mote dentro del Json para que 
+     * el usuario pueda seleccionar el mote en específico de quien quiera saber su información.
+     * Función que te permite buscar a una persona por su mote y una vez que te muestre su información, 
+     * se mostrará el árbol genealógico a partir de él.
+     */
     private void buscarpornombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarpornombreActionPerformed
         ArbolVisualizer AV = InterfazFunciones.getArbol();
         if (AV != null){

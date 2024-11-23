@@ -8,17 +8,27 @@ import Arbol.ArbolVisualizer;
 import EDD.HashTable;
 import EDD.TableManager;
 
+
 /**
- *
- * @author María Correa
+ * Clase InterfazFunciones
+ * @author Macorre21
+ * @version 1.0
  */
 public class InterfazFunciones {
     
+     /**
+    * @param VisualArbol variable privada de tipo ArbolVisualizer que es declarada en un principio como null
+    * @param controlador variable privada de tipo TableManager que es declarada en un principio como null
+    * @param hashTablaNombres variable privada de tipo HashTable que es declarada en un principio como null
+    * @param hashTablaMotes variable privada de tipo HashTable que es declarada en un principio como null
+    * @param paginaprincipal variable privada que es declarada una nueva variable de la clase interfaz Bienvenida
+    * @param menu variable privada que es declarada como una nueva variable de la clase interfaz Menu
+    * @param buscarpersona variable privada que es declarada como una nueva variable de la clase interfaz BuscarPersona
+    */
     private static ArbolVisualizer VisualArbol = null;
     private static TableManager controlador = null;
     private static HashTable hashTablaNombres = null;
     private static HashTable hashTablaMotes = null;
-    
     private static final Bienvenida paginaprincipal= new Bienvenida(); 
     private static final Menu menu =new Menu();
     private static final BuscarPersona buscarpersona = new BuscarPersona();
@@ -40,7 +50,7 @@ public class InterfazFunciones {
     }
     
     /**
-     * Función para que la clase de interfaz Menú sea visible al llamar el método
+     * Función para que la clase de interfaz Menu sea visible al llamar el método
      */
     public static void openMenu() {
         getMenuPrincipal().setVisible(true);
@@ -53,14 +63,14 @@ public class InterfazFunciones {
     }
    
     /**
-     * @return variable interna buscarnombre
+     * @return variable interna buscarpersona
      */      
     public static BuscarPersona getBuscarPersona() {
         return buscarpersona;
     }
    
     /**
-     * Función para que la clase de interfaz BuscarNombre sea visible al llamar el método
+     * Función para que la clase de interfaz BuscarPersona sea visible al llamar el método
      */    
     public static void openBuscarPersona() {
         getBuscarPersona().setVisible(true);
@@ -68,19 +78,18 @@ public class InterfazFunciones {
     }
     
     /**
-     * Función para que la clase de interfaz Menú sea visible la única visible cuado el usuario salga
+     * Función para que la clase de interfaz Menú sea la única visible cuado el usuario salga
      de las otras interfaces y vuelva al origen
      */
     
     public static void VolverMenu(){
         getMenuPrincipal().setVisible(true);
-
         getBuscarPersona().setVisible(false);
         
    }
 
     /**
-     * @return the arbol
+     * @return the VisualArbol
      */
     public static ArbolVisualizer getArbol() {
         return VisualArbol;
@@ -108,14 +117,14 @@ public class InterfazFunciones {
     }
 
     /**
-     * @return the hashTabla
+     * @return the HashTablaNombres
      */
     public static HashTable getHashTablaNombres() {
         return hashTablaNombres;
     }
 
     /**
-     * @param aHashTabla the hashTabla to set
+     * @param aHashTabla the HashTablaNombres to set
      */
     public static void setHashTablaNombres(HashTable aHashTabla) {
         InterfazFunciones.hashTablaNombres = aHashTabla;
