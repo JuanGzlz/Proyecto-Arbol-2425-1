@@ -4,16 +4,8 @@
  */
 package Main;
 
-import Arbol.Arbol;
-import Arbol.ArbolVisualizer;
-import Arbol.NodoArbol;
-import EDD.HashTable;
-import EDD.Lista;
-import EDD.Nodo;
-import EDD.TableManager;
-import Funciones.JsonChooser;
-import Funciones.JsonDecoder;
 import Interfaces.InterfazFunciones;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
@@ -25,10 +17,13 @@ public class ProyectoArboles {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.IOException
+     * @throws java.lang.InterruptedException
      */
 
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws FileNotFoundException,IOException, InterruptedException {
        InterfazFunciones.openBienvenida();
     }
 

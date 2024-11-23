@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Funciones;
+
 import Arbol.Arbol;
 import Arbol.NodoArbol;
 import EDD.HashTable;

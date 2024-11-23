@@ -6,8 +6,6 @@ package Interfaces;
 
 import Arbol.ArbolVisualizer;
 import Arbol.NodoArbol;
-import EDD.HashTable;
-import EDD.Lista;
 import EDD.TableManager;
 import static java.awt.image.ImageObserver.HEIGHT;
 import javax.swing.JOptionPane;
@@ -127,7 +125,7 @@ public class BuscarPersona extends javax.swing.JFrame {
         if (AV != null){
             TableManager TableControlador = InterfazFunciones.getControlador();
             String[] A = TableControlador.ConseguirMotes();
-            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Se mostrará la descendencia de la persona que seleccione:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
             if (S != null){
                 NodoArbol N = TableControlador.BusquedaMotes(S);
                 if(N==null){
@@ -162,7 +160,7 @@ public class BuscarPersona extends javax.swing.JFrame {
         if (AV != null){
             TableManager TableControlador = InterfazFunciones.getControlador();
             String[] A = TableControlador.ConseguirNombres();
-            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Se mostrará la descendencia de la persona que seleccione:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
             if (S != null){
                 NodoArbol N = TableControlador.BusquedaNombres(S);
                 if(N==null){

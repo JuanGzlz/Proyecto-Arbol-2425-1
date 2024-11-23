@@ -3,8 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package EDD;
-import Arbol.NodoArbol;
 
+import Arbol.NodoArbol;
 
 /**
  * Clase que representa un nodo de una lista enlazada.
