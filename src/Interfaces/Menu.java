@@ -11,7 +11,6 @@ import EDD.Lista;
 import EDD.TableManager;
 import Funciones.JsonChooser;
 import Funciones.JsonDecoder;
-import Interfaces.InterfazFunciones;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -19,13 +18,19 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author María Correa
+ * Clase Interfaz Menu
+ * @author Macorre21
+ * @version 1.0
  */
 public class Menu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Menu
+     /**
+     * Constructor de la clase interfaz Menu
+     * @param newChose variable interna de tipo JsonDecoder
+     * @param Arbolito variable interna de tipo ArbolVisualizer
+     * @param TableControlador variable interna de tipo TableManager
+     * @param HashNombres variable interna de tipo HashTable
+     * @param HashMotes variable interna de tipo HashTable
      */
     private JsonDecoder newChose;
     private ArbolVisualizer Arbolito;
@@ -54,7 +59,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cargarjson = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        buscarnombre = new javax.swing.JButton();
+        buscarpersona = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         buscartitulo = new javax.swing.JButton();
         exit = new javax.swing.JButton();
@@ -113,15 +118,15 @@ public class Menu extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pngtree-magnifying-glass-icon-image_2292648-removebg-preview.png"))); // NOI18N
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 100, -1));
 
-        buscarnombre.setBackground(new java.awt.Color(255, 204, 153));
-        buscarnombre.setFont(new java.awt.Font("Baskerville Old Face", 1, 18)); // NOI18N
-        buscarnombre.setText("Buscar persona");
-        buscarnombre.addActionListener(new java.awt.event.ActionListener() {
+        buscarpersona.setBackground(new java.awt.Color(255, 204, 153));
+        buscarpersona.setFont(new java.awt.Font("Baskerville Old Face", 1, 18)); // NOI18N
+        buscarpersona.setText("Buscar persona");
+        buscarpersona.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buscarnombreActionPerformed(evt);
+                buscarpersonaActionPerformed(evt);
             }
         });
-        getContentPane().add(buscarnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, -1, -1));
+        getContentPane().add(buscarpersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, -1, -1));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/depositphotos_308515132-stock-illustration-document-search-minimal-line-web-removebg-preview (1) (1).png"))); // NOI18N
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 100, 110));
@@ -183,6 +188,12 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     /**
+     * @param evt
+     * En principio se genera una lista desplegable con todos las personas que se encuentren dentro del Json para que 
+     * el usuario pueda seleccionar la persona en específico de quien quiera saber sus antepasados.
+     * Función que te permite buscar a los antepasados de una persona.
+     */
     private void antepasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_antepasadosActionPerformed
         this.Arbolito = InterfazFunciones.getArbol();
         if (this.Arbolito != null){
@@ -213,6 +224,12 @@ public class Menu extends javax.swing.JFrame {
         }         
     }//GEN-LAST:event_antepasadosActionPerformed
 
+     /**
+     * @param evt
+     * En principio se genera una lista desplegable con todos las generaciones que se encuentren dentro del Json para que 
+     * el usuario pueda seleccionar la generación en específico de la cual quiera saber su información.
+     * Función que te permite buscar a los integrantes de cada generación.
+     */
     private void listaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaActionPerformed
         this.Arbolito = InterfazFunciones.getArbol();
         if (this.Arbolito != null){
@@ -245,6 +262,14 @@ public class Menu extends javax.swing.JFrame {
         }          
     }//GEN-LAST:event_listaActionPerformed
 
+    /**
+     * @param evt
+     * @param file nueva variable de tipo JsonChooser
+     * Función que permite cargar un archivo Json mediante el uso de una ventana de archivos del computador
+     * Se guarda este arbol "Arbolito" en la clase InterfazFunciones para poder llamarlo en las distintas funciones de la clase
+     * Se guarda este hashtable "HashNombres" en la clase InterfazFunciones para poder llamarlo en las distintas funciones de la clase
+     * Se guarda este hashtable "HashMotes" en la clase InterfazFunciones para poder llamarlo en las distintas funciones de la clase
+     */
     private void cargarjsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarjsonActionPerformed
         JsonChooser file = new JsonChooser();
         file.chooseFile();
@@ -272,6 +297,12 @@ public class Menu extends javax.swing.JFrame {
         }                                           
     }//GEN-LAST:event_cargarjsonActionPerformed
 
+     /**
+     * @param evt
+     * En principio se genera una lista desplegable con todos los títulos que se encuentren dentro del Json para que 
+     * el usuario pueda seleccionar el título específico de quien quiera saber su información.
+     * Función que te permite buscar a una persona por su título.
+     */
     private void buscartituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscartituloActionPerformed
         this.Arbolito = InterfazFunciones.getArbol();
         if (this.Arbolito != null){
@@ -304,10 +335,20 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buscartituloActionPerformed
 
-    private void buscarnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarnombreActionPerformed
+    
+    /**
+     * @param evt
+     * Función para que la clase interfaz BuscarPersona sea visible al llamar el método
+     */
+    private void buscarpersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarpersonaActionPerformed
         InterfazFunciones.openBuscarPersona();
-    }//GEN-LAST:event_buscarnombreActionPerformed
+    }//GEN-LAST:event_buscarpersonaActionPerformed
 
+     /**
+     * @param evt
+     * Al presionar el botón se llama a la función de la Clase InterfazFunciones "getArbol" y si ésta 
+     * no es igual a null se muestra el árbol
+     */
     private void mostrararbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrararbolActionPerformed
         this.Arbolito = InterfazFunciones.getArbol();
         if (this.Arbolito != null) {
@@ -319,6 +360,10 @@ public class Menu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mostrararbolActionPerformed
 
+     /**
+     * @param evt
+     * Función para que termine la corrida del programa
+     */
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         this.dispose();
         System.exit(0);
@@ -361,7 +406,7 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton antepasados;
-    private javax.swing.JButton buscarnombre;
+    private javax.swing.JButton buscarpersona;
     private javax.swing.JButton buscartitulo;
     private javax.swing.JButton cargarjson;
     private javax.swing.JButton exit;
