@@ -199,14 +199,14 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Su archivo fue cargado exitosamente.");
             try {
                 json = new JsonDecoder(file.getJson());
-                HashTable tablaNombres = json.crearHashTable();
-                HashTable tablaMotes = json.HashTableMotes(tablaNombres);
+                //HashTable tablaNombres = json.crearHashTable();
+                //HashTable tablaMotes = json.HashTableMotes(tablaNombres);
                 TableManager creador = new TableManager();
                 creador.CrearEstructuras(json);
-                System.out.println(creador.getTree().getRaiz().getNombre());
-                System.out.println(creador.getTree().getRaiz().getNumeral());
+                //System.out.println(creador.getTree().getRaiz().getNombre());
+                //System.out.println(creador.getTree().getRaiz().getNumeral());
                 ArbolVisualizer g = new ArbolVisualizer(creador.getTree(), creador.getTablaNombre());
-                g.mostrarArbol();
+                new Thread(() -> g.mostrarArbol()).start();
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
