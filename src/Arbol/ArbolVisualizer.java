@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Arbol;
+
 import EDD.HashTable;
 import EDD.Lista;
 import EDD.Nodo;
 import javax.swing.JOptionPane;
 import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.view.ViewerPipe;

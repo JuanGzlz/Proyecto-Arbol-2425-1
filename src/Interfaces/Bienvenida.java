@@ -4,7 +4,6 @@
  */
 package Interfaces;
 
-
 /**
  * Clase interfaz Bienvenida
  * @author Macorre21

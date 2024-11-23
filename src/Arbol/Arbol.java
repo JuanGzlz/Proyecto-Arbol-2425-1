@@ -5,7 +5,6 @@
 package Arbol;
 
 import EDD.Lista;
-import EDD.Nodo;
 
 /**
  * Clase que representa un árbol general con nodos de tipo {@link NodoArbol}.

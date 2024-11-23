@@ -235,7 +235,7 @@ public class Menu extends javax.swing.JFrame {
         if (this.Arbolito != null){
             this.TableControlador = InterfazFunciones.getControlador();
             String[] A = this.TableControlador.ConseguirGeneraciones();
-            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una generación:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Se mostrarán los miembros de la generación que seleccione:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
             if (S != null){
                 String[] B = this.TableControlador.BuscarPorGeneracion(S);
                 String T = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, B, DISPOSE_ON_CLOSE);
@@ -308,7 +308,7 @@ public class Menu extends javax.swing.JFrame {
         if (this.Arbolito != null){
             this.TableControlador = InterfazFunciones.getControlador();
             String[] A = this.TableControlador.ConseguirTitulos();
-            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione un título:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Se mostrarán las personas con el título que seleccione:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
             if (S != null){
                 String[] B = this.TableControlador.BuscarPorTitulo(S);
                 String T = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, B, DISPOSE_ON_CLOSE);
