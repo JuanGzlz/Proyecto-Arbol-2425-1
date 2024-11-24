@@ -276,6 +276,7 @@ public class Menu extends javax.swing.JFrame {
         if (file.getJson() != null){
             JOptionPane.showMessageDialog(null, "Su archivo fue cargado exitosamente.");
             try {
+
                 newChose = new JsonDecoder(file.getJson());
                 TableControlador = new TableManager();
                 TableControlador.CrearEstructuras(newChose);
@@ -286,6 +287,7 @@ public class Menu extends javax.swing.JFrame {
                 InterfazFunciones.setHashTablaNombres(HashNombres);
                 HashMotes = newChose.HashTableMotes(HashNombres);
                 InterfazFunciones.setHashTablaMotes(HashMotes);
+
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);

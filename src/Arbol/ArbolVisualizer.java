@@ -224,6 +224,7 @@ public class ArbolVisualizer implements ViewerListener{
                     fromViewer.pump(); // or fromViewer.blockingPump(); in the nightly builds
             }
 	}).start();
+        this.graph.getNode(Elegido.NombreCompleto()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
     }
 }
 
