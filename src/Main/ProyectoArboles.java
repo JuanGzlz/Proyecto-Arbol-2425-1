@@ -4,47 +4,27 @@
  */
 package Main;
 
-import Arbol.Arbol;
-import Arbol.ArbolVisualizer;
-import Arbol.NodoArbol;
-import EDD.HashTable;
-import EDD.Lista;
-import EDD.Nodo;
-import EDD.TableManager;
-import Funciones.JsonChooser;
-import Funciones.JsonDecoder;
 import Interfaces.InterfazFunciones;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
 /**
  *
- * @author Admin
+ * @author María Correa
  */
 public class ProyectoArboles {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.IOException
+     * @throws java.lang.InterruptedException
      */
 
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws FileNotFoundException,IOException, InterruptedException {
        InterfazFunciones.openBienvenida();
-//        JsonChooser newFile = new JsonChooser();
-//        newFile.chooseFile();
-//        JsonDecoder newChose = new JsonDecoder(newFile.getJson());
-//        HashTable tabla = newChose.crearHashTable();
-////        NodoArbol newNodo = tabla.busquedaHasheo("Viserys Targaryen, First of his name, son of Aegon the Conqueror");
-//        HashTable tabla2 = newChose.HashTableMotes(tabla);
-//        NodoArbol newNodo2 = tabla2.busquedaHasheo("Daeron the Good");
-////        NodoArbol newNodo3 = tabla2.busquedaHasheo("Baelor Breakspear");
-//        
-//        TableManager creador = new TableManager();
-//        creador.CrearEstructuras(newChose);
-//        Lista l = creador.getTree().DFS(newNodo2);
-//        Nodo aux = l.getpFirst();
-//        ArbolVisualizer g = new ArbolVisualizer(creador.getTree(), creador.getTablaNombre());
-//        g.mostrarAntepasados(l);
     }
 
 }

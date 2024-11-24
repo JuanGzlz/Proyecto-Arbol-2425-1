@@ -3,15 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package EDD;
-import Arbol.NodoArbol;
 
+import Arbol.NodoArbol;
 
 /**
  * Clase que representa un nodo de una lista enlazada.
  * Cada nodo almacena un objeto de tipo NodoArbol, un nombre, 
  * y una referencia al siguiente nodo en la lista.
  * 
- * @author Admin
+ * @author María Correa
  */
 public class Nodo {
     private String Nombre;

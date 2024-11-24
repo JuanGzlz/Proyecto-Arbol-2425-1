@@ -5,14 +5,13 @@
 package Arbol;
 
 import EDD.Lista;
-import EDD.Nodo;
 
 /**
  * Clase que representa un árbol general con nodos de tipo {@link NodoArbol}.
  * Ofrece métodos para establecer la raíz del árbol y realizar búsquedas
  * en profundidad (DFS) para encontrar un nodo específico.
  * 
- * @author Admin
+ * @author Valentina Vegas
  */
 public class Arbol {
     /**

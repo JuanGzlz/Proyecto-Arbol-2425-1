@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Arbol;
+
 import EDD.HashTable;
 import EDD.Lista;
 import EDD.Nodo;
 import javax.swing.JOptionPane;
 import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.view.ViewerPipe;
@@ -19,7 +19,7 @@ import org.graphstream.ui.view.ViewerListener;
  * Permite representar un árbol como un grafo, interactuar con sus nodos y 
  * visualizar relaciones y linajes en un entorno gráfico.
  * 
- * @author valen
+ * @author Valentina Vegas & Juan González
  */
 public class ArbolVisualizer implements ViewerListener{
     /**
@@ -64,15 +64,18 @@ public class ArbolVisualizer implements ViewerListener{
         fromViewer.addViewerListener(this);
 	fromViewer.addSink(this.graph);
         this.CrearRelacion();
+        this.loop = true;
 
-	while(loop) {
-		fromViewer.pump(); // or fromViewer.blockingPump(); in the nightly builds
-	}
+	new Thread(() -> {
+            while(loop) {
+                    fromViewer.pump(); // or fromViewer.blockingPump(); in the nightly builds
+            }
+	}).start();
     }
     
         @Override
 	public void viewClosed(String id) {
-		loop = false;
+            loop = false;
 	}
 
         @Override
@@ -112,8 +115,6 @@ public class ArbolVisualizer implements ViewerListener{
     public void CrearRelacion(){
         NodoArbol root = arbol.getRaiz();
         AgregarHijos(root);
-        
-        
     }
     
     /**
@@ -164,9 +165,14 @@ public class ArbolVisualizer implements ViewerListener{
         fromViewer.addViewerListener(this);
 	fromViewer.addSink(this.graph);
         this.AgregarLinaje(Linaje);
-	while(loop) {
-		fromViewer.pump(); // or fromViewer.blockingPump(); in the nightly builds
-	}
+        this.loop = true;
+        
+        new Thread(() -> {
+            while(loop) {
+                    fromViewer.pump(); // or fromViewer.blockingPump(); in the nightly builds
+
+            }
+	}).start();
     }
     
     /**
@@ -176,41 +182,50 @@ public class ArbolVisualizer implements ViewerListener{
      */
     public void AgregarLinaje(Lista Linaje){
         Nodo aux = Linaje.getpFirst();
+        Nodo aux1 = aux.getpNext();
         int j = 0;
-        while(j < Linaje.getSize() - 1){
+        if(Linaje.getSize() == 1){
+            this.graph.addNode(aux.getPersona().NombreCompleto()).setAttribute("ui.label", aux.getPersona().getNombre() + ", " + aux.getPersona().getNumeral() + " of his name");
+            this.graph.getNode(aux.getPersona().NombreCompleto()).setAttribute("ui.style", "fill-color: yellow; shape: circle; size: 20px;");
+        }
+        while(aux1 != null){
         NodoArbol visita = aux.getPersona();
+        NodoArbol visita1 = aux1.getPersona();
         if(this.graph.getNode(visita.NombreCompleto())==null){
             this.graph.addNode(visita.NombreCompleto()).setAttribute("ui.label", visita.getNombre() + ", " + visita.getNumeral() + " of his name");
             this.graph.getNode(visita.NombreCompleto()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
         }
-        NodoArbol Hijo = visita.getfSon();
-        String[] HijosCompleto = visita.getHijos().split(", ");
-        while(Hijo != null){
-            if(this.graph.getNode(Hijo.NombreCompleto())==null){
-                this.graph.addNode(Hijo.NombreCompleto()).setAttribute("ui.label", Hijo.getNombre() + ", " + Hijo.getNumeral() + " of his name");
-                this.graph.getNode(Hijo.NombreCompleto()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
-            }
-            this.graph.addEdge(visita.NombreCompleto() + "-" + Hijo.NombreCompleto(), visita.NombreCompleto(), Hijo.NombreCompleto());
-            for(int i = 0; i < HijosCompleto.length; i++){
-                if(Hijo.getNombre().contains(HijosCompleto[i])){
-                    HijosCompleto[i] = "null";
-                }
-            }
-            Hijo = Hijo.getnBrother();
+        if(this.graph.getNode(visita1.NombreCompleto())==null){
+            this.graph.addNode(visita1.NombreCompleto()).setAttribute("ui.label", visita1.getNombre() + ", " + visita1.getNumeral() + " of his name");
+            this.graph.getNode(visita1.NombreCompleto()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
         }
-        for(int i = 0; i < HijosCompleto.length; i++){
-            if(!HijosCompleto[i].equals("null") && !HijosCompleto[i].equals("")){
-                this.graph.addNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.label", HijosCompleto[i]);
-                this.graph.getNode(HijosCompleto[i] + " hijo de " + visita.getNombre()).setAttribute("ui.style", "fill-color: green; shape: circle; size: 20px;");
-                this.graph.addEdge(visita.NombreCompleto() + "-" + HijosCompleto[i] + " hijo de " + visita.getNombre(), visita.NombreCompleto(), HijosCompleto[i] + " hijo de " + visita.getNombre());
-            }
-        }
-        j++;
+        this.graph.addEdge(visita.NombreCompleto() + "-" + visita1.NombreCompleto(), visita.NombreCompleto(), visita1.NombreCompleto());
         aux = aux.getpNext();
+        aux1 = aux1.getpNext();
         }
         this.graph.getNode(aux.getPersona().NombreCompleto()).setAttribute("ui.style", "fill-color: yellow;");
     }
     
+    public void mostrarDescendencia(NodoArbol Elegido) {
+        this.graph = new SingleGraph("GRAFO: Descendientes");
+        this.viewer = graph.display();
+        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
+        this.fromViewer = viewer.newViewerPipe();
+        fromViewer.addViewerListener(this);
+	fromViewer.addSink(this.graph);
+        
+        this.AgregarHijos(Elegido);
+        this.graph.getNode(Elegido.NombreCompleto()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
+    
+        this.loop = true;
+        
+	new Thread(() -> {
+            while(loop) {
+                    fromViewer.pump(); // or fromViewer.blockingPump(); in the nightly builds
+            }
+	}).start();
+        this.graph.getNode(Elegido.NombreCompleto()).setAttribute("ui.style", "fill-color: red; shape: circle; size: 20px;");
+    }
 }
 
 

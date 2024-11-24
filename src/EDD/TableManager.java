@@ -14,7 +14,7 @@ import java.io.IOException;
  * Permite crear y manipular estructuras, así como realizar consultas específicas como
  * búsqueda por título, generación o mote.
  * 
- * @author valen
+ * @author Valentina Vegas & Juan González
  */
 public class TableManager {
     
@@ -221,7 +221,7 @@ public class TableManager {
         Cola C = new Cola();
         C.encolar(aux);
 
-        while(!C.isEmpty()){
+        while(!C.isEmpty() && Profundidad_Actual != Profundidad_Deseada){
             if(nodos_por_capa==0){ //Paso a la siguiente generacion
                 nodos_por_capa = nodos_por_ver;
                 nodos_por_ver = 0;
@@ -249,6 +249,14 @@ public class TableManager {
         }
         
         return Nombres;
+    }
+    
+    public NodoArbol BusquedaNombres(String S){
+        return this.TablaNombre.busquedaHasheo(S);
+    }
+    
+    public NodoArbol BusquedaMotes(String S){
+        return this.TablaMote.busquedaHasheo(S);
     }
     
 }

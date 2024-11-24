@@ -5,11 +5,12 @@
 package Interfaces;
 
 import Arbol.ArbolVisualizer;
+import Arbol.NodoArbol;
 import EDD.HashTable;
+import EDD.Lista;
 import EDD.TableManager;
 import Funciones.JsonChooser;
 import Funciones.JsonDecoder;
-import Interfaces.InterfazFunciones;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -17,14 +18,25 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author User
+ * Clase Interfaz Menu
+ * @author Macorre21
+ * @version 1.0
  */
 public class Menu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Menu
+     /**
+     * Constructor de la clase interfaz Menu
+     * @param newChose variable interna de tipo JsonDecoder
+     * @param Arbolito variable interna de tipo ArbolVisualizer
+     * @param TableControlador variable interna de tipo TableManager
+     * @param HashNombres variable interna de tipo HashTable
+     * @param HashMotes variable interna de tipo HashTable
      */
+    private JsonDecoder newChose;
+    private ArbolVisualizer Arbolito;
+    private TableManager TableControlador;
+    private HashTable HashNombres;
+    private HashTable HashMotes;
     public Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -47,7 +59,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cargarjson = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        buscarnombre = new javax.swing.JButton();
+        buscarpersona = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         buscartitulo = new javax.swing.JButton();
         exit = new javax.swing.JButton();
@@ -65,11 +77,10 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/png-clipart-computer-icons-tree-icon-design-tree-black-silhouette-removebg-preview.png"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 110, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 110, -1));
 
-        mostrararbol.setBackground(new java.awt.Color(153, 153, 153));
+        mostrararbol.setBackground(new java.awt.Color(255, 204, 153));
         mostrararbol.setFont(new java.awt.Font("Baskerville Old Face", 1, 18)); // NOI18N
-        mostrararbol.setForeground(new java.awt.Color(255, 255, 255));
         mostrararbol.setText("Ver Árbol");
         mostrararbol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,25 +90,23 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().add(mostrararbol, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pngtree-check-list-icon-isolated-on-abstract-background-png-image_1776830-removebg-preview.png"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 190, 120, 120));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, 120, 120));
 
-        lista.setBackground(new java.awt.Color(153, 153, 153));
+        lista.setBackground(new java.awt.Color(255, 204, 153));
         lista.setFont(new java.awt.Font("Baskerville Old Face", 1, 18)); // NOI18N
-        lista.setForeground(new java.awt.Color(255, 255, 255));
         lista.setText("Generaciones");
         lista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listaActionPerformed(evt);
             }
         });
-        getContentPane().add(lista, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, -1, -1));
+        getContentPane().add(lista, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 340, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/subir-removebg-preview.png"))); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, 80));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, -1, 80));
 
-        cargarjson.setBackground(new java.awt.Color(153, 153, 153));
+        cargarjson.setBackground(new java.awt.Color(255, 204, 153));
         cargarjson.setFont(new java.awt.Font("Baskerville Old Face", 1, 18)); // NOI18N
-        cargarjson.setForeground(new java.awt.Color(255, 255, 255));
         cargarjson.setText("Cargar Json");
         cargarjson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,36 +116,33 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().add(cargarjson, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pngtree-magnifying-glass-icon-image_2292648-removebg-preview.png"))); // NOI18N
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 50, 100, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 100, -1));
 
-        buscarnombre.setBackground(new java.awt.Color(153, 153, 153));
-        buscarnombre.setFont(new java.awt.Font("Baskerville Old Face", 1, 18)); // NOI18N
-        buscarnombre.setForeground(new java.awt.Color(255, 255, 255));
-        buscarnombre.setText("Buscar persona");
-        buscarnombre.addActionListener(new java.awt.event.ActionListener() {
+        buscarpersona.setBackground(new java.awt.Color(255, 204, 153));
+        buscarpersona.setFont(new java.awt.Font("Baskerville Old Face", 1, 18)); // NOI18N
+        buscarpersona.setText("Buscar persona");
+        buscarpersona.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buscarnombreActionPerformed(evt);
+                buscarpersonaActionPerformed(evt);
             }
         });
-        getContentPane().add(buscarnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, -1, -1));
+        getContentPane().add(buscarpersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, -1, -1));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/depositphotos_308515132-stock-illustration-document-search-minimal-line-web-removebg-preview (1) (1).png"))); // NOI18N
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 100, 110));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 100, 110));
 
-        buscartitulo.setBackground(new java.awt.Color(153, 153, 153));
+        buscartitulo.setBackground(new java.awt.Color(255, 204, 153));
         buscartitulo.setFont(new java.awt.Font("Baskerville Old Face", 1, 18)); // NOI18N
-        buscartitulo.setForeground(new java.awt.Color(255, 255, 255));
         buscartitulo.setText("Buscar por título");
         buscartitulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscartituloActionPerformed(evt);
             }
         });
-        getContentPane().add(buscartitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, -1, -1));
+        getContentPane().add(buscartitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, -1, -1));
 
-        exit.setBackground(new java.awt.Color(153, 153, 153));
+        exit.setBackground(new java.awt.Color(255, 204, 153));
         exit.setFont(new java.awt.Font("Baskerville Old Face", 1, 18)); // NOI18N
-        exit.setForeground(new java.awt.Color(255, 255, 255));
         exit.setText("X ");
         exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,37 +151,36 @@ public class Menu extends javax.swing.JFrame {
         });
         getContentPane().add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, -1, -1));
 
-        antepasados.setBackground(new java.awt.Color(153, 153, 153));
+        antepasados.setBackground(new java.awt.Color(255, 204, 153));
         antepasados.setFont(new java.awt.Font("Baskerville Old Face", 1, 18)); // NOI18N
-        antepasados.setForeground(new java.awt.Color(255, 255, 255));
         antepasados.setText("Antepasados");
         antepasados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 antepasadosActionPerformed(evt);
             }
         });
-        getContentPane().add(antepasados, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, -1));
+        getContentPane().add(antepasados, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, -1, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/download__1_-removebg-preview (2) (1).png"))); // NOI18N
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 110, 110));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 130, 120));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/png-transparent-circle-scalable-graphics-circle-cdr-angle-white-removebg-preview (1).png"))); // NOI18N
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, -1, -1));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/beige__1_-removebg-preview.png"))); // NOI18N
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, -1, -1));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/png-transparent-circle-scalable-graphics-circle-cdr-angle-white-removebg-preview (1).png"))); // NOI18N
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, -1, -1));
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/beige__1_-removebg-preview.png"))); // NOI18N
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, -1));
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/png-transparent-circle-scalable-graphics-circle-cdr-angle-white-removebg-preview (1).png"))); // NOI18N
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/beige__1_-removebg-preview.png"))); // NOI18N
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, -1));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/png-transparent-circle-scalable-graphics-circle-cdr-angle-white-removebg-preview (1).png"))); // NOI18N
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 190, -1, -1));
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/beige__1_-removebg-preview.png"))); // NOI18N
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, 140, -1));
 
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/png-transparent-circle-scalable-graphics-circle-cdr-angle-white-removebg-preview (1).png"))); // NOI18N
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, -1, -1));
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/beige__1_-removebg-preview.png"))); // NOI18N
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, -1, -1));
 
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/png-transparent-circle-scalable-graphics-circle-cdr-angle-white-removebg-preview (1).png"))); // NOI18N
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/beige__1_-removebg-preview.png"))); // NOI18N
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/thumb-1920-427997 (1).jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 390));
@@ -183,30 +188,106 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     /**
+     * @param evt
+     * En principio se genera una lista desplegable con todos las personas que se encuentren dentro del Json para que 
+     * el usuario pueda seleccionar la persona en específico de quien quiera saber sus antepasados.
+     * Función que te permite buscar a los antepasados de una persona.
+     */
     private void antepasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_antepasadosActionPerformed
-        
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null){
+            this.TableControlador = InterfazFunciones.getControlador();
+            String[] A = this.TableControlador.ConseguirNombres();
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            if (S != null){
+                NodoArbol N = this.TableControlador.BusquedaNombres(S);
+                if(N==null){
+                    JOptionPane.showMessageDialog(null,
+                    ("No se tiene información sobre esta persona."),
+                    "", JOptionPane.INFORMATION_MESSAGE);
+                    Lista l = this.TableControlador.getTree().DFS(N);
+                    this.Arbolito.mostrarAntepasados(l);
+                } else{
+                    String Datos = N.DevolverDatos();
+                    JOptionPane.showMessageDialog(null,
+                    (Datos),
+                    "", JOptionPane.INFORMATION_MESSAGE);
+                    Lista l = this.TableControlador.getTree().DFS(N);
+                    this.Arbolito.mostrarAntepasados(l);
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Seleccione una persona correctamente.");
+            }
+        }else {
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún árbol.");
+        }         
     }//GEN-LAST:event_antepasadosActionPerformed
 
+     /**
+     * @param evt
+     * En principio se genera una lista desplegable con todos las generaciones que se encuentren dentro del Json para que 
+     * el usuario pueda seleccionar la generación en específico de la cual quiera saber su información.
+     * Función que te permite buscar a los integrantes de cada generación.
+     */
     private void listaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaActionPerformed
-        
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null){
+            this.TableControlador = InterfazFunciones.getControlador();
+            String[] A = this.TableControlador.ConseguirGeneraciones();
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Se mostrarán los miembros de la generación que seleccione:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+            if (S != null){
+                String[] B = this.TableControlador.BuscarPorGeneracion(S);
+                String T = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, B, DISPOSE_ON_CLOSE);
+                if (T != null){
+                    NodoArbol N = this.TableControlador.BusquedaNombres(T);
+                    if(N==null){
+                        JOptionPane.showMessageDialog(null,
+                        ("No se tiene información sobre esta persona."),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    } else{
+                        String Datos = N.DevolverDatos();
+                        JOptionPane.showMessageDialog(null,
+                        (Datos),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Seleccione una persona correctamente.");
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Seleccione una generación correctamente.");
+            }
+        }else {
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún árbol.");
+        }          
     }//GEN-LAST:event_listaActionPerformed
 
+    /**
+     * @param evt
+     * @param file nueva variable de tipo JsonChooser
+     * Función que permite cargar un archivo Json mediante el uso de una ventana de archivos del computador
+     * Se guarda este arbol "Arbolito" en la clase InterfazFunciones para poder llamarlo en las distintas funciones de la clase
+     * Se guarda este hashtable "HashNombres" en la clase InterfazFunciones para poder llamarlo en las distintas funciones de la clase
+     * Se guarda este hashtable "HashMotes" en la clase InterfazFunciones para poder llamarlo en las distintas funciones de la clase
+     */
     private void cargarjsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarjsonActionPerformed
         JsonChooser file = new JsonChooser();
         file.chooseFile();
         if (file.getJson() != null){
-            JsonDecoder json;
             JOptionPane.showMessageDialog(null, "Su archivo fue cargado exitosamente.");
             try {
-                json = new JsonDecoder(file.getJson());
-                //HashTable tablaNombres = json.crearHashTable();
-                //HashTable tablaMotes = json.HashTableMotes(tablaNombres);
-                TableManager creador = new TableManager();
-                creador.CrearEstructuras(json);
-                //System.out.println(creador.getTree().getRaiz().getNombre());
-                //System.out.println(creador.getTree().getRaiz().getNumeral());
-                ArbolVisualizer g = new ArbolVisualizer(creador.getTree(), creador.getTablaNombre());
-                new Thread(() -> g.mostrarArbol()).start();
+
+                newChose = new JsonDecoder(file.getJson());
+                TableControlador = new TableManager();
+                TableControlador.CrearEstructuras(newChose);
+                InterfazFunciones.setControlador(TableControlador);
+                Arbolito = new ArbolVisualizer(TableControlador.getTree(), TableControlador.getTablaNombre());
+                InterfazFunciones.setArbol(Arbolito);
+                HashNombres = newChose.crearHashTable();
+                InterfazFunciones.setHashTablaNombres(HashNombres);
+                HashMotes = newChose.HashTableMotes(HashNombres);
+                InterfazFunciones.setHashTablaMotes(HashMotes);
+
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
@@ -216,52 +297,64 @@ public class Menu extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Seleccione un archivo correctamente.");
         }                                           
-
     }//GEN-LAST:event_cargarjsonActionPerformed
 
+     /**
+     * @param evt
+     * En principio se genera una lista desplegable con todos los títulos que se encuentren dentro del Json para que 
+     * el usuario pueda seleccionar el título específico de quien quiera saber su información.
+     * Función que te permite buscar a una persona por su título.
+     */
     private void buscartituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscartituloActionPerformed
-        
-    }//GEN-LAST:event_buscartituloActionPerformed
-
-    private void buscarnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarnombreActionPerformed
-        Grafo g = InterfazFunciones.getGrafo();
-        if (g != null){
-            TableManager T = new 
-            Funcionalidades f = new Funcionalidades();
-            int i = 0;
-            Vertice v = g.getListaParadas().getpFirst();
-            while(v!= null){
-                for(int j = 0; j < v.getNombre().length; j++){
-                    i++;
-                }
-                v = v.getpNext();
-            }
-            String[] A = new String[i];
-            i = 0;
-            v = g.getListaParadas().getpFirst();
-            while(v!=null){
-                for(int j = 0; j < v.getNombre().length; j++){
-                    A[i] = v.getNombre()[j];
-                    i++;
-                }
-                v = v.getpNext();
-            }
-            String S = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una parada:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null){
+            this.TableControlador = InterfazFunciones.getControlador();
+            String[] A = this.TableControlador.ConseguirTitulos();
+            String S = (String) JOptionPane.showInputDialog(rootPane, "Se mostrarán las personas con el título que seleccione:", "", HEIGHT, null, A, DISPOSE_ON_CLOSE);
             if (S != null){
-                v = g.busquedaInicial(S);
-                f.seleccionarSucursal(g, v, T);
+                String[] B = this.TableControlador.BuscarPorTitulo(S);
+                String T = (String) JOptionPane.showInputDialog(rootPane, "Seleccione una persona:", "", HEIGHT, null, B, DISPOSE_ON_CLOSE);
+                if (T != null){
+                    NodoArbol N = this.TableControlador.BusquedaNombres(T);
+                    if(N==null){
+                        JOptionPane.showMessageDialog(null,
+                        ("No se tiene información sobre esta persona."),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    } else{
+                        String Datos = N.DevolverDatos();
+                        JOptionPane.showMessageDialog(null,
+                        (Datos),
+                        "", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Seleccione una persona correctamente.");
+                }
             }else{
-                JOptionPane.showMessageDialog(rootPane, "Seleccione una parada correctamente.");
+                JOptionPane.showMessageDialog(rootPane, "Seleccione un título correctamente.");
             }
         }else {
-            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún grafo.");
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún árbol.");
         }
-    }//GEN-LAST:event_buscarnombreActionPerformed
+    }//GEN-LAST:event_buscartituloActionPerformed
 
+    
+    /**
+     * @param evt
+     * Función para que la clase interfaz BuscarPersona sea visible al llamar el método
+     */
+    private void buscarpersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarpersonaActionPerformed
+        InterfazFunciones.openBuscarPersona();
+    }//GEN-LAST:event_buscarpersonaActionPerformed
+
+     /**
+     * @param evt
+     * Al presionar el botón se llama a la función de la Clase InterfazFunciones "getArbol" y si ésta 
+     * no es igual a null se muestra el árbol
+     */
     private void mostrararbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrararbolActionPerformed
-         this.g = InterfazFunciones.getArbol();
-        if (this.g != null) {
-            this.g.mostrarArbol();
+        this.Arbolito = InterfazFunciones.getArbol();
+        if (this.Arbolito != null) {
+            this.Arbolito.mostrarArbol();
             
         }else {
             JOptionPane.showMessageDialog(rootPane, "No ha ingresado ningún archivo Json para leer.");
@@ -269,6 +362,10 @@ public class Menu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mostrararbolActionPerformed
 
+     /**
+     * @param evt
+     * Función para que termine la corrida del programa
+     */
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         this.dispose();
         System.exit(0);
@@ -311,7 +408,7 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton antepasados;
-    private javax.swing.JButton buscarnombre;
+    private javax.swing.JButton buscarpersona;
     private javax.swing.JButton buscartitulo;
     private javax.swing.JButton cargarjson;
     private javax.swing.JButton exit;
